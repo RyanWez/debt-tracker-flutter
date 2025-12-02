@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../providers/data_provider.dart';
 import '../widgets/edit_customer_dialog.dart';
 import 'add_transaction_screen.dart';
@@ -9,6 +10,18 @@ class CustomerDetailScreen extends StatelessWidget {
   final String customerId;
 
   const CustomerDetailScreen({super.key, required this.customerId});
+
+  void _showToast(String message, {bool isError = false}) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 3,
+      backgroundColor: isError ? Colors.red.shade600 : Colors.green.shade600,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +78,15 @@ class CustomerDetailScreen extends StatelessWidget {
               IconButton(
                 icon: const Icon(Icons.delete_outline),
                 onPressed: () {
+                  // Check if customer has debt
+                  if (customer.totalDebt > 0) {
+                    _showToast(
+                      'Cannot delete customer with outstanding debt: ${NumberFormat("#,##0", "en_US").format(customer.totalDebt)} Ks',
+                      isError: true,
+                    );
+                    return;
+                  }
+                  
                   showDialog(
                     context: context,
                     builder: (ctx) => AlertDialog(
@@ -195,21 +217,24 @@ class CustomerDetailScreen extends StatelessWidget {
                         const SizedBox(width: 16),
                         Expanded(
                           child: FilledButton.icon(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => AddTransactionScreen(
-                                    customerId: customerId,
-                                    type: 'payment',
-                                  ),
-                                ),
-                              );
-                            },
+                            onPressed: customer.totalDebt > 0
+                                ? () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => AddTransactionScreen(
+                                          customerId: customerId,
+                                          type: 'payment',
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                : null, // Disabled when no debt
                             icon: const Icon(Icons.arrow_upward),
                             label: const Text('Repay'),
                             style: FilledButton.styleFrom(
                               backgroundColor: Colors.green,
+                              disabledBackgroundColor: Colors.grey.shade300,
                               padding: const EdgeInsets.symmetric(vertical: 12),
                             ),
                           ),
