@@ -72,4 +72,36 @@ class DataProvider with ChangeNotifier {
     saveData();
     notifyListeners();
   }
+
+  void updateCustomer(Customer updatedCustomer) {
+    final index = _customers.indexWhere((c) => c.id == updatedCustomer.id);
+    if (index != -1) {
+      _customers[index] = updatedCustomer;
+      saveData();
+      notifyListeners();
+    }
+  }
+
+  void deleteTransaction(String transactionId) {
+    final transaction = _transactions.firstWhere(
+      (t) => t.id == transactionId,
+      orElse: () => throw Exception('Transaction not found'),
+    );
+
+    // Recalculate customer debt
+    final customerIndex = _customers.indexWhere(
+      (c) => c.id == transaction.customerId,
+    );
+    if (customerIndex != -1) {
+      if (transaction.type == 'debt') {
+        _customers[customerIndex].totalDebt -= transaction.amount;
+      } else {
+        _customers[customerIndex].totalDebt += transaction.amount;
+      }
+    }
+
+    _transactions.removeWhere((t) => t.id == transactionId);
+    saveData();
+    notifyListeners();
+  }
 }

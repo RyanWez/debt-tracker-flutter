@@ -74,10 +74,36 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                 ),
                 keyboardType: TextInputType.number,
                 validator: (value) {
-                  if (value == null || value.isEmpty)
+                  if (value == null || value.isEmpty) {
                     return 'Please enter an amount';
-                  if (double.tryParse(value) == null)
+                  }
+                  final amount = double.tryParse(value);
+                  if (amount == null) {
                     return 'Please enter a valid number';
+                  }
+                  if (amount <= 0) {
+                    return 'Amount must be greater than 0';
+                  }
+                  
+                  // For payment, check if it exceeds total debt
+                  if (widget.type == 'payment') {
+                    final dataProvider = Provider.of<DataProvider>(
+                      context,
+                      listen: false,
+                    );
+                    final customer = dataProvider.customers.firstWhere(
+                      (c) => c.id == widget.customerId,
+                    );
+                    
+                    if (customer.totalDebt <= 0) {
+                      return 'No debt to repay';
+                    }
+                    
+                    if (amount > customer.totalDebt) {
+                      return 'Payment cannot exceed debt: ${NumberFormat("#,##0", "en_US").format(customer.totalDebt)} Ks';
+                    }
+                  }
+                  
                   return null;
                 },
               ),

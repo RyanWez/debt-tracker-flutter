@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import '../providers/data_provider.dart';
+import '../widgets/edit_customer_dialog.dart';
 import 'add_transaction_screen.dart';
 
 class CustomerDetailScreen extends StatelessWidget {
@@ -28,6 +29,39 @@ class CustomerDetailScreen extends StatelessWidget {
           appBar: AppBar(
             title: const Text('Customer Details'),
             actions: [
+              IconButton(
+                icon: const Icon(Icons.edit_outlined),
+                onPressed: () {
+                  showGeneralDialog(
+                    context: context,
+                    barrierDismissible: true,
+                    barrierLabel: 'Edit Customer',
+                    barrierColor: Colors.black54,
+                    transitionDuration: const Duration(milliseconds: 300),
+                    pageBuilder: (context, animation, secondaryAnimation) {
+                      return EditCustomerDialog(customer: customer);
+                    },
+                    transitionBuilder: (context, animation, secondaryAnimation, child) {
+                      final curvedAnimation = CurvedAnimation(
+                        parent: animation,
+                        curve: Curves.easeOutCubic,
+                        reverseCurve: Curves.easeInCubic,
+                      );
+                      
+                      return SlideTransition(
+                        position: Tween<Offset>(
+                          begin: const Offset(0, -1),
+                          end: Offset.zero,
+                        ).animate(curvedAnimation),
+                        child: FadeTransition(
+                          opacity: curvedAnimation,
+                          child: child,
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
               IconButton(
                 icon: const Icon(Icons.delete_outline),
                 onPressed: () {
@@ -220,43 +254,94 @@ class CustomerDetailScreen extends StatelessWidget {
                                 child: Opacity(opacity: value, child: child),
                               );
                             },
-                            child: Card(
-                              margin: const EdgeInsets.only(bottom: 12),
-                              child: ListTile(
-                                leading: CircleAvatar(
-                                  backgroundColor: transaction.type == 'debt'
-                                      ? Colors.red.shade50
-                                      : Colors.green.shade50,
-                                  child: Icon(
+                            child: Dismissible(
+                              key: Key(transaction.id),
+                              direction: DismissDirection.endToStart,
+                              confirmDismiss: (direction) async {
+                                return await showDialog(
+                                  context: context,
+                                  builder: (ctx) => AlertDialog(
+                                    title: const Text('Delete Transaction'),
+                                    content: const Text(
+                                      'Are you sure you want to delete this transaction?',
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () => Navigator.pop(ctx, false),
+                                        child: const Text('Cancel'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () => Navigator.pop(ctx, true),
+                                        child: const Text(
+                                          'Delete',
+                                          style: TextStyle(color: Colors.red),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                              onDismissed: (direction) {
+                                dataProvider.deleteTransaction(transaction.id);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Transaction deleted'),
+                                    duration: Duration(seconds: 2),
+                                  ),
+                                );
+                              },
+                              background: Container(
+                                alignment: Alignment.centerRight,
+                                padding: const EdgeInsets.only(right: 20),
+                                margin: const EdgeInsets.only(bottom: 12),
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                child: const Icon(
+                                  Icons.delete,
+                                  color: Colors.white,
+                                  size: 32,
+                                ),
+                              ),
+                              child: Card(
+                                margin: const EdgeInsets.only(bottom: 12),
+                                child: ListTile(
+                                  leading: CircleAvatar(
+                                    backgroundColor: transaction.type == 'debt'
+                                        ? Colors.red.shade50
+                                        : Colors.green.shade50,
+                                    child: Icon(
+                                      transaction.type == 'debt'
+                                          ? Icons.arrow_downward
+                                          : Icons.arrow_upward,
+                                      color: transaction.type == 'debt'
+                                          ? Colors.red
+                                          : Colors.green,
+                                    ),
+                                  ),
+                                  title: Text(
                                     transaction.type == 'debt'
-                                        ? Icons.arrow_downward
-                                        : Icons.arrow_upward,
-                                    color: transaction.type == 'debt'
-                                        ? Colors.red
-                                        : Colors.green,
+                                        ? 'Debt Added'
+                                        : 'Payment Received',
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
-                                ),
-                                title: Text(
-                                  transaction.type == 'debt'
-                                      ? 'Debt Added'
-                                      : 'Payment Received',
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w500,
+                                  subtitle: Text(
+                                    DateFormat(
+                                      'MMM d, yyyy • h:mm a',
+                                    ).format(transaction.date),
                                   ),
-                                ),
-                                subtitle: Text(
-                                  DateFormat(
-                                    'MMM d, yyyy • h:mm a',
-                                  ).format(transaction.date),
-                                ),
-                                trailing: Text(
-                                  '${NumberFormat("#,##0", "en_US").format(transaction.amount)}',
-                                  style: TextStyle(
-                                    color: transaction.type == 'debt'
-                                        ? Colors.red
-                                        : Colors.green,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
+                                  trailing: Text(
+                                    '${NumberFormat("#,##0", "en_US").format(transaction.amount)}',
+                                    style: TextStyle(
+                                      color: transaction.type == 'debt'
+                                          ? Colors.red
+                                          : Colors.green,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                    ),
                                   ),
                                 ),
                               ),
