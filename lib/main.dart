@@ -21,7 +21,8 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color(0xFFFACC15), // Yellow for primary buttons
+            seedColor: const Color(0xFFFACC15), // Yellow base
+            primary: const Color(0xFFFACC15),    // Exact yellow for buttons/accents
           ),
           useMaterial3: true,
           fontFamily: 'Inter',
