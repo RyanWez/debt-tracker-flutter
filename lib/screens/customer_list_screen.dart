@@ -125,9 +125,33 @@ class _CustomerListScreenState extends State<CustomerListScreen> {
                 ),
           floatingActionButton: FloatingActionButton.extended(
             onPressed: () {
-              showDialog(
+              showGeneralDialog(
                 context: context,
-                builder: (context) => const AddCustomerDialog(),
+                barrierDismissible: true,
+                barrierLabel: 'Add Customer',
+                barrierColor: Colors.black54,
+                transitionDuration: const Duration(milliseconds: 300),
+                pageBuilder: (context, animation, secondaryAnimation) {
+                  return const AddCustomerDialog();
+                },
+                transitionBuilder: (context, animation, secondaryAnimation, child) {
+                  final curvedAnimation = CurvedAnimation(
+                    parent: animation,
+                    curve: Curves.easeOutCubic,
+                    reverseCurve: Curves.easeInCubic,
+                  );
+                  
+                  return SlideTransition(
+                    position: Tween<Offset>(
+                      begin: const Offset(0, -1), // Start from top (off screen)
+                      end: Offset.zero, // End at normal position
+                    ).animate(curvedAnimation),
+                    child: FadeTransition(
+                      opacity: curvedAnimation,
+                      child: child,
+                    ),
+                  );
+                },
               );
             },
             label: const Text('Add Customer'),
