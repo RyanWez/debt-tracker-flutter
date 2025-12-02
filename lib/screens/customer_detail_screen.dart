@@ -277,10 +277,7 @@ class CustomerDetailScreen extends StatelessWidget {
                             builder: (context, value, child) {
                               return Transform.translate(
                                 offset: Offset(0, 30 * (1 - value)), // Larger slide distance
-                                child: Opacity(
-                                  opacity: value,
-                                  child: child,
-                                ),
+                                child: child,
                               );
                             },
                             child: Dismissible(
