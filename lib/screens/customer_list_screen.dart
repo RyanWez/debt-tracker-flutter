@@ -5,6 +5,8 @@ import '../widgets/add_customer_dialog.dart';
 import '../l10n/app_localizations.dart';
 import 'customer_detail_screen.dart';
 
+enum SortOption { highestDebt, lowestDebt, nameAz, recentActivity }
+
 class CustomerListScreen extends StatefulWidget {
   const CustomerListScreen({super.key});
 
@@ -14,6 +16,7 @@ class CustomerListScreen extends StatefulWidget {
 
 class _CustomerListScreenState extends State<CustomerListScreen> {
   String _searchQuery = '';
+  SortOption _sortOption = SortOption.highestDebt;
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +30,142 @@ class _CustomerListScreenState extends State<CustomerListScreen> {
               customer.phone.contains(_searchQuery);
         }).toList();
 
+        customers.sort((a, b) {
+          switch (_sortOption) {
+            case SortOption.highestDebt:
+              return b.totalDebt.compareTo(a.totalDebt);
+            case SortOption.lowestDebt:
+              return a.totalDebt.compareTo(b.totalDebt);
+            case SortOption.nameAz:
+              return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+            case SortOption.recentActivity:
+              return b.lastTransactionDate.compareTo(a.lastTransactionDate);
+          }
+        });
+
         return Scaffold(
           appBar: AppBar(
             title: Text(l10n.navCustomers),
+            actions: [
+              PopupMenuButton<SortOption>(
+                icon: const Icon(Icons.sort_rounded),
+                tooltip: l10n.sortBy,
+                onSelected: (SortOption result) {
+                  setState(() {
+                    _sortOption = result;
+                  });
+                },
+                itemBuilder: (BuildContext context) =>
+                    <PopupMenuEntry<SortOption>>[
+                      PopupMenuItem<SortOption>(
+                        value: SortOption.highestDebt,
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.arrow_downward,
+                              color: _sortOption == SortOption.highestDebt
+                                  ? Theme.of(context).colorScheme.primary
+                                  : Colors.grey,
+                              size: 20,
+                            ),
+                            const SizedBox(width: 12),
+                            Text(
+                              l10n.sortHighestDebt,
+                              style: TextStyle(
+                                fontWeight:
+                                    _sortOption == SortOption.highestDebt
+                                    ? FontWeight.bold
+                                    : FontWeight.normal,
+                                color: _sortOption == SortOption.highestDebt
+                                    ? Theme.of(context).colorScheme.primary
+                                    : null,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      PopupMenuItem<SortOption>(
+                        value: SortOption.lowestDebt,
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.arrow_upward,
+                              color: _sortOption == SortOption.lowestDebt
+                                  ? Theme.of(context).colorScheme.primary
+                                  : Colors.grey,
+                              size: 20,
+                            ),
+                            const SizedBox(width: 12),
+                            Text(
+                              l10n.sortLowestDebt,
+                              style: TextStyle(
+                                fontWeight: _sortOption == SortOption.lowestDebt
+                                    ? FontWeight.bold
+                                    : FontWeight.normal,
+                                color: _sortOption == SortOption.lowestDebt
+                                    ? Theme.of(context).colorScheme.primary
+                                    : null,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      PopupMenuItem<SortOption>(
+                        value: SortOption.nameAz,
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.sort_by_alpha,
+                              color: _sortOption == SortOption.nameAz
+                                  ? Theme.of(context).colorScheme.primary
+                                  : Colors.grey,
+                              size: 20,
+                            ),
+                            const SizedBox(width: 12),
+                            Text(
+                              l10n.sortNameAz,
+                              style: TextStyle(
+                                fontWeight: _sortOption == SortOption.nameAz
+                                    ? FontWeight.bold
+                                    : FontWeight.normal,
+                                color: _sortOption == SortOption.nameAz
+                                    ? Theme.of(context).colorScheme.primary
+                                    : null,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      PopupMenuItem<SortOption>(
+                        value: SortOption.recentActivity,
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.history,
+                              color: _sortOption == SortOption.recentActivity
+                                  ? Theme.of(context).colorScheme.primary
+                                  : Colors.grey,
+                              size: 20,
+                            ),
+                            const SizedBox(width: 12),
+                            Text(
+                              l10n.sortRecentActivity,
+                              style: TextStyle(
+                                fontWeight:
+                                    _sortOption == SortOption.recentActivity
+                                    ? FontWeight.bold
+                                    : FontWeight.normal,
+                                color: _sortOption == SortOption.recentActivity
+                                    ? Theme.of(context).colorScheme.primary
+                                    : null,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+              ),
+            ],
             bottom: PreferredSize(
               preferredSize: const Size.fromHeight(80),
               child: Padding(

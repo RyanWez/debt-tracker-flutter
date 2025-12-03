@@ -92,6 +92,11 @@ class AppLocalizations {
       'fill_in_customer_details': 'Fill in customer details',
       'customer_added_successfully': 'Customer added successfully!',
       'currency_symbol': 'Ks',
+      'sort_by': 'Sort by',
+      'sort_highest_debt': 'Highest Debt First',
+      'sort_lowest_debt': 'Lowest Debt First',
+      'sort_name_az': 'Name (A-Z)',
+      'sort_recent_activity': 'Recent Activity',
     },
     'my': {
       // App Title
@@ -173,6 +178,11 @@ class AppLocalizations {
       'fill_in_customer_details': 'Customer အချက်အလက်များ ဖြည့်သွင်းပါ',
       'customer_added_successfully': 'Customer အသစ် ထည့်သွင်းပြီးပါပြီ',
       'currency_symbol': 'Ks',
+      'sort_by': 'စီစဉ်ရန်',
+      'sort_highest_debt': 'အကြွေးအများဆုံး အရင်',
+      'sort_lowest_debt': 'အကြွေးအနည်းဆုံး အရင်',
+      'sort_name_az': 'အမည် (က-အ)',
+      'sort_recent_activity': 'လတ်တလော လှုပ်ရှားမှု',
     },
   };
 
@@ -243,6 +253,11 @@ class AppLocalizations {
   String get customerAddedSuccessfully =>
       translate('customer_added_successfully');
   String get currencySymbol => translate('currency_symbol');
+  String get sortBy => translate('sort_by');
+  String get sortHighestDebt => translate('sort_highest_debt');
+  String get sortLowestDebt => translate('sort_lowest_debt');
+  String get sortNameAz => translate('sort_name_az');
+  String get sortRecentActivity => translate('sort_recent_activity');
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
