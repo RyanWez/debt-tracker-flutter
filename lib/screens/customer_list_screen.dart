@@ -179,7 +179,9 @@ class _CustomerListScreenState extends State<CustomerListScreen> {
                         leading: const Icon(Icons.search),
                         elevation: WidgetStateProperty.all(0),
                         backgroundColor: WidgetStateProperty.all(
-                          Colors.grey.shade100,
+                          Theme.of(context).brightness == Brightness.dark
+                              ? Colors.grey.shade800
+                              : Colors.grey.shade100,
                         ),
                         onChanged: (value) {
                           setState(() {

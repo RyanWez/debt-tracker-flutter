@@ -97,6 +97,12 @@ class AppLocalizations {
       'sort_lowest_debt': 'Lowest Debt First',
       'sort_name_az': 'Name (A-Z)',
       'sort_recent_activity': 'Recent Activity',
+
+      // Theme
+      'theme': 'Theme',
+      'system_theme': 'System Default',
+      'light_theme': 'Light Mode',
+      'dark_theme': 'Dark Mode',
     },
     'my': {
       // App Title
@@ -183,6 +189,12 @@ class AppLocalizations {
       'sort_lowest_debt': 'အကြွေးအနည်းဆုံး အရင်',
       'sort_name_az': 'အမည် (က-အ)',
       'sort_recent_activity': 'လတ်တလော လှုပ်ရှားမှု',
+
+      // Theme
+      'theme': 'အပြင်အဆင်',
+      'system_theme': 'စက်၏ မူလပုံစံ',
+      'light_theme': 'အလင်း',
+      'dark_theme': 'အမှောင်',
     },
   };
 
@@ -258,6 +270,12 @@ class AppLocalizations {
   String get sortLowestDebt => translate('sort_lowest_debt');
   String get sortNameAz => translate('sort_name_az');
   String get sortRecentActivity => translate('sort_recent_activity');
+
+  // Theme
+  String get theme => translate('theme');
+  String get systemTheme => translate('system_theme');
+  String get lightTheme => translate('light_theme');
+  String get darkTheme => translate('dark_theme');
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/language_provider.dart';
+import '../providers/theme_provider.dart';
 import '../l10n/app_localizations.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -11,12 +12,74 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final languageProvider = Provider.of<LanguageProvider>(context);
+    final themeProvider = Provider.of<ThemeProvider>(context);
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.navSettings)),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
+          Card(
+            child: Column(
+              children: [
+                ListTile(
+                  leading: const Icon(
+                    Icons.brightness_6,
+                    color: Color(0xFFFACC15),
+                  ),
+                  title: Text(
+                    l10n.theme,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                    ),
+                  ),
+                  subtitle: Text(
+                    themeProvider.themeMode == ThemeMode.system
+                        ? l10n.systemTheme
+                        : themeProvider.themeMode == ThemeMode.light
+                        ? l10n.lightTheme
+                        : l10n.darkTheme,
+                  ),
+                ),
+                const Divider(height: 1),
+                RadioListTile<ThemeMode>(
+                  title: Text(l10n.systemTheme),
+                  value: ThemeMode.system,
+                  // ignore: deprecated_member_use
+                  groupValue: themeProvider.themeMode,
+                  // ignore: deprecated_member_use
+                  onChanged: (value) {
+                    if (value != null) themeProvider.setThemeMode(value);
+                  },
+                  activeColor: const Color(0xFFFACC15),
+                ),
+                RadioListTile<ThemeMode>(
+                  title: Text(l10n.lightTheme),
+                  value: ThemeMode.light,
+                  // ignore: deprecated_member_use
+                  groupValue: themeProvider.themeMode,
+                  // ignore: deprecated_member_use
+                  onChanged: (value) {
+                    if (value != null) themeProvider.setThemeMode(value);
+                  },
+                  activeColor: const Color(0xFFFACC15),
+                ),
+                RadioListTile<ThemeMode>(
+                  title: Text(l10n.darkTheme),
+                  value: ThemeMode.dark,
+                  // ignore: deprecated_member_use
+                  groupValue: themeProvider.themeMode,
+                  // ignore: deprecated_member_use
+                  onChanged: (value) {
+                    if (value != null) themeProvider.setThemeMode(value);
+                  },
+                  activeColor: const Color(0xFFFACC15),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 24),
           Card(
             child: Column(
               children: [

@@ -122,14 +122,7 @@ class _EditCustomerDialogState extends State<EditCustomerDialog> {
           constraints: const BoxConstraints(maxWidth: 500),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(28),
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Colors.white,
-                theme.colorScheme.primary.withValues(alpha: 0.02),
-              ],
-            ),
+            color: theme.colorScheme.surface,
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withValues(alpha: 0.15),
@@ -193,7 +186,7 @@ class _EditCustomerDialogState extends State<EditCustomerDialog> {
                               Text(
                                 l10n.updateCustomerDetails,
                                 style: theme.textTheme.bodySmall?.copyWith(
-                                  color: Colors.grey.shade600,
+                                  color: theme.colorScheme.onSurfaceVariant,
                                 ),
                               ),
                             ],
@@ -213,7 +206,10 @@ class _EditCustomerDialogState extends State<EditCustomerDialog> {
                         hintText: l10n.enterFullName,
                         prefixIcon: const Icon(Icons.person_rounded),
                         filled: true,
-                        fillColor: Colors.grey.shade50,
+                        fillColor: theme.brightness == Brightness.dark
+                            ? Colors.grey.shade900
+                            : theme.colorScheme.surfaceContainerHighest
+                                  .withValues(alpha: 0.3),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(16),
                           borderSide: BorderSide.none,
@@ -221,7 +217,7 @@ class _EditCustomerDialogState extends State<EditCustomerDialog> {
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(16),
                           borderSide: BorderSide(
-                            color: Colors.grey.shade200,
+                            color: Colors.grey.shade600,
                             width: 1,
                           ),
                         ),
@@ -262,7 +258,10 @@ class _EditCustomerDialogState extends State<EditCustomerDialog> {
                         hintText: l10n.optional,
                         prefixIcon: const Icon(Icons.phone_rounded),
                         filled: true,
-                        fillColor: Colors.grey.shade50,
+                        fillColor: theme.brightness == Brightness.dark
+                            ? Colors.grey.shade900
+                            : theme.colorScheme.surfaceContainerHighest
+                                  .withValues(alpha: 0.3),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(16),
                           borderSide: BorderSide.none,
@@ -270,7 +269,7 @@ class _EditCustomerDialogState extends State<EditCustomerDialog> {
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(16),
                           borderSide: BorderSide(
-                            color: Colors.grey.shade200,
+                            color: Colors.grey.shade600,
                             width: 1,
                           ),
                         ),
@@ -297,7 +296,10 @@ class _EditCustomerDialogState extends State<EditCustomerDialog> {
                         prefixIcon: const Icon(Icons.location_on_rounded),
                         alignLabelWithHint: true,
                         filled: true,
-                        fillColor: Colors.grey.shade50,
+                        fillColor: theme.brightness == Brightness.dark
+                            ? Colors.grey.shade900
+                            : theme.colorScheme.surfaceContainerHighest
+                                  .withValues(alpha: 0.3),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(16),
                           borderSide: BorderSide.none,
@@ -305,7 +307,7 @@ class _EditCustomerDialogState extends State<EditCustomerDialog> {
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(16),
                           borderSide: BorderSide(
-                            color: Colors.grey.shade200,
+                            color: Colors.grey.shade600,
                             width: 1,
                           ),
                         ),
@@ -335,9 +337,11 @@ class _EditCustomerDialogState extends State<EditCustomerDialog> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(16),
                               ),
-                              foregroundColor: Colors.grey.shade800,
+                              foregroundColor: theme.colorScheme.onSurface,
                               side: BorderSide(
-                                color: Colors.grey.shade400,
+                                color: theme.colorScheme.outline.withValues(
+                                  alpha: 0.5,
+                                ),
                                 width: 1.5,
                               ),
                             ),
@@ -346,7 +350,7 @@ class _EditCustomerDialogState extends State<EditCustomerDialog> {
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
-                                color: Colors.grey.shade800,
+                                color: theme.colorScheme.onSurface,
                               ),
                             ),
                           ),

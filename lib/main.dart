@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'providers/data_provider.dart';
 import 'providers/language_provider.dart';
+import 'providers/theme_provider.dart';
 import 'screens/main_screen.dart';
 import 'l10n/app_localizations.dart';
 
@@ -18,10 +19,13 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => DataProvider()..loadData()),
-        ChangeNotifierProvider(create: (_) => LanguageProvider()..loadLanguage()),
+        ChangeNotifierProvider(
+          create: (_) => LanguageProvider()..loadLanguage(),
+        ),
+        ChangeNotifierProvider(create: (_) => ThemeProvider()..loadTheme()),
       ],
-      child: Consumer<LanguageProvider>(
-        builder: (context, languageProvider, child) {
+      child: Consumer2<LanguageProvider, ThemeProvider>(
+        builder: (context, languageProvider, themeProvider, child) {
           return MaterialApp(
             onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
             debugShowCheckedModeBanner: false,
@@ -36,10 +40,13 @@ class MyApp extends StatelessWidget {
               Locale('en'), // English
               Locale('my'), // Myanmar
             ],
+            themeMode: themeProvider.themeMode,
             theme: ThemeData(
               colorScheme: ColorScheme.fromSeed(
                 seedColor: const Color(0xFFFACC15), // Yellow base
-                primary: const Color(0xFFFACC15),    // Exact yellow for buttons/accents
+                primary: const Color(
+                  0xFFFACC15,
+                ), // Exact yellow for buttons/accents
               ),
               useMaterial3: true,
               fontFamily: 'Inter',
@@ -69,6 +76,43 @@ class MyApp extends StatelessWidget {
                 ),
                 color: Colors.white,
                 surfaceTintColor: Colors.white,
+              ),
+            ),
+            darkTheme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: const Color(0xFFFACC15),
+                primary: const Color(0xFFFACC15),
+                brightness: Brightness.dark,
+              ),
+              useMaterial3: true,
+              fontFamily: 'Inter',
+              scaffoldBackgroundColor: const Color(0xFF121212),
+              pageTransitionsTheme: const PageTransitionsTheme(
+                builders: {
+                  TargetPlatform.android: ZoomPageTransitionsBuilder(),
+                  TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+                },
+              ),
+              appBarTheme: const AppBarTheme(
+                centerTitle: true,
+                elevation: 0,
+                backgroundColor: Color(0xFF1E1E1E),
+                surfaceTintColor: Colors.transparent,
+                titleTextStyle: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: 'Inter',
+                ),
+                iconTheme: IconThemeData(color: Colors.white),
+              ),
+              cardTheme: CardThemeData(
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                color: const Color(0xFF1E1E1E),
+                surfaceTintColor: const Color(0xFF1E1E1E),
               ),
             ),
             home: const MainScreen(),

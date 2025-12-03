@@ -124,10 +124,12 @@ class CustomerDetailScreen extends StatelessWidget {
                 width: double.infinity,
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color:
+                      Theme.of(context).cardTheme.color ??
+                      Theme.of(context).colorScheme.surface,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withValues(alpha: 0.1),
+                      color: Colors.black.withValues(alpha: 0.05),
                       blurRadius: 10,
                       offset: const Offset(0, 5),
                     ),
@@ -236,7 +238,12 @@ class CustomerDetailScreen extends StatelessWidget {
                             label: Text(l10n.repay),
                             style: FilledButton.styleFrom(
                               backgroundColor: Colors.green,
-                              disabledBackgroundColor: Colors.grey.shade300,
+                              disabledBackgroundColor: Colors.white.withValues(
+                                alpha: 0.12,
+                              ),
+                              disabledForegroundColor: Colors.white.withValues(
+                                alpha: 0.38,
+                              ),
                               padding: const EdgeInsets.symmetric(vertical: 12),
                             ),
                           ),
