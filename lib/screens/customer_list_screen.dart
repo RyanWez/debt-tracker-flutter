@@ -31,21 +31,83 @@ class _CustomerListScreenState extends State<CustomerListScreen> {
           appBar: AppBar(
             title: Text(l10n.navCustomers),
             bottom: PreferredSize(
-              preferredSize: const Size.fromHeight(60),
+              preferredSize: const Size.fromHeight(80),
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                child: SearchBar(
-                  hintText: l10n.searchHint,
-                  leading: const Icon(Icons.search),
-                  elevation: WidgetStateProperty.all(0),
-                  backgroundColor: WidgetStateProperty.all(
-                    Colors.grey.shade100,
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      _searchQuery = value;
-                    });
-                  },
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 7,
+                      child: SearchBar(
+                        hintText: l10n.searchHint,
+                        leading: const Icon(Icons.search),
+                        elevation: WidgetStateProperty.all(0),
+                        backgroundColor: WidgetStateProperty.all(
+                          Colors.grey.shade100,
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            _searchQuery = value;
+                          });
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      flex: 3,
+                      child: SizedBox(
+                        height: 56,
+                        child: FilledButton(
+                          onPressed: () {
+                            showGeneralDialog(
+                              context: context,
+                              barrierDismissible: true,
+                              barrierLabel: l10n.addCustomer,
+                              barrierColor: Colors.black54,
+                              transitionDuration: const Duration(
+                                milliseconds: 300,
+                              ),
+                              pageBuilder:
+                                  (context, animation, secondaryAnimation) {
+                                    return const AddCustomerDialog();
+                                  },
+                              transitionBuilder:
+                                  (
+                                    context,
+                                    animation,
+                                    secondaryAnimation,
+                                    child,
+                                  ) {
+                                    final curvedAnimation = CurvedAnimation(
+                                      parent: animation,
+                                      curve: Curves.easeOutCubic,
+                                      reverseCurve: Curves.easeInCubic,
+                                    );
+
+                                    return SlideTransition(
+                                      position: Tween<Offset>(
+                                        begin: const Offset(0, -1),
+                                        end: Offset.zero,
+                                      ).animate(curvedAnimation),
+                                      child: FadeTransition(
+                                        opacity: curvedAnimation,
+                                        child: child,
+                                      ),
+                                    );
+                                  },
+                            );
+                          },
+                          style: FilledButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(28),
+                            ),
+                            padding: EdgeInsets.zero,
+                          ),
+                          child: const Icon(Icons.person_add),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -146,44 +208,6 @@ class _CustomerListScreenState extends State<CustomerListScreen> {
                     );
                   },
                 ),
-          floatingActionButton: FloatingActionButton.extended(
-            onPressed: () {
-              showGeneralDialog(
-                context: context,
-                barrierDismissible: true,
-                barrierLabel: l10n.addCustomer,
-                barrierColor: Colors.black54,
-                transitionDuration: const Duration(milliseconds: 300),
-                pageBuilder: (context, animation, secondaryAnimation) {
-                  return const AddCustomerDialog();
-                },
-                transitionBuilder:
-                    (context, animation, secondaryAnimation, child) {
-                      final curvedAnimation = CurvedAnimation(
-                        parent: animation,
-                        curve: Curves.easeOutCubic,
-                        reverseCurve: Curves.easeInCubic,
-                      );
-
-                      return SlideTransition(
-                        position: Tween<Offset>(
-                          begin: const Offset(
-                            0,
-                            -1,
-                          ), // Start from top (off screen)
-                          end: Offset.zero, // End at normal position
-                        ).animate(curvedAnimation),
-                        child: FadeTransition(
-                          opacity: curvedAnimation,
-                          child: child,
-                        ),
-                      );
-                    },
-              );
-            },
-            label: Text(l10n.addCustomer),
-            icon: const Icon(Icons.person_add),
-          ),
         );
       },
     );
