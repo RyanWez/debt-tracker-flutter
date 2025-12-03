@@ -101,10 +101,10 @@ class AppLocalizations {
       'nav_settings': 'Settings',
       
       // Dashboard Screen
-      'total_debt': 'Total Debt',
-      'customers': 'Customers',
-      'recent_transactions': 'Recent Transactions',
-      'no_transactions': 'Transactions မရှိသေးပါ',
+      'total_debt': 'စုစုပေါင်းအကြွေး',
+      'customers': 'ဖောက်သည်များ',
+      'recent_transactions': 'လတ်တလောမှတ်တမ်းများ',
+      'no_transactions': 'မှတ်တမ်းမရှိသေးပါ',
       
       // Customer List Screen
       'search_hint': 'နာမည် သို့မဟုတ် ဖုန်းနံပါတ်ဖြင့် ရှာပါ',
@@ -113,16 +113,16 @@ class AppLocalizations {
       
       // Customer Detail Screen
       'customer_details': 'Customer Details',
-      'add_debt': 'Debt ထည့်မယ်',
-      'repay': 'Repay',
-      'no_transactions_yet': 'Transactions မရှိသေးပါ',
+      'add_debt': 'အကြွေး မှတ်မယ်',
+      'repay': 'ပြန်ဆပ်တာ မှတ်မယ်',
+      'no_transactions_yet': 'မှတ်တမ်း မရှိသေးပါ',
       'delete_customer': 'ဖောက်သည် ဖျက်မယ်',
       'delete_customer_msg': 'သေချာပါသလား? စာရင်းများ အားလုံး ပျက်သွားမှာ ဖြစ်ပါတယ်။',
       'cannot_delete': 'အကြွေး ကျန်နေသေးသော ဖောက်သည်ကို ဖျက်၍ မရပါ: ',
       
       // Transaction Types
-      'debt_added': 'Debt ထည့်ခဲ့',
-      'payment_received': 'Payment ရရှိခဲ့',
+      'debt_added': 'အကြွေးယူ',
+      'payment_received': 'အကြွေး ရရှိခဲ့',
       
       // Add Customer Dialog
       'add_new_customer': 'ဖောက်သည်အသစ် ထည့်မယ်',
@@ -164,7 +164,7 @@ class AppLocalizations {
       'update_customer_details': 'ဖောက်သည် အချက်အလက်များ ပြင်ဆင်ရန်',
       'enter_full_name': 'နာမည်အပြည့်အစုံ ထည့်ပါ',
       'name_min_length': 'နာမည်သည် အနည်းဆုံး ၂ လုံး ရှိရပါမည်',
-      'optional': 'ချန်လှပ်နိုင်',
+      'optional': 'မထည့်သွင်းလည်း ရပါတယ်',
       'address': 'လိပ်စာ',
       'app_version': 'App Version',
       'fill_in_customer_details': 'Customer အချက်အလက်များ ဖြည့်သွင်းပါ',

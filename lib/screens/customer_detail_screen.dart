@@ -363,7 +363,7 @@ class CustomerDetailScreen extends StatelessWidget {
                                     ).format(transaction.date),
                                   ),
                                   trailing: Text(
-                                    '${NumberFormat("#,##0", "en_US").format(transaction.amount)}',
+                                    '${transaction.type == 'debt' ? '-' : '+'}${NumberFormat("#,##0", "en_US").format(transaction.amount)} ${l10n.currencySymbol}',
                                     style: TextStyle(
                                       color: transaction.type == 'debt'
                                           ? Colors.red
