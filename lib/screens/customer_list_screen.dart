@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/data_provider.dart';
 import '../widgets/add_customer_dialog.dart';
+import '../l10n/app_localizations.dart';
 import 'customer_detail_screen.dart';
 
 class CustomerListScreen extends StatefulWidget {
@@ -16,6 +17,7 @@ class _CustomerListScreenState extends State<CustomerListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Consumer<DataProvider>(
       builder: (context, dataProvider, child) {
         final customers = dataProvider.customers.where((customer) {
@@ -27,13 +29,13 @@ class _CustomerListScreenState extends State<CustomerListScreen> {
 
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Customers'),
+            title: Text(l10n.navCustomers),
             bottom: PreferredSize(
               preferredSize: const Size.fromHeight(60),
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                 child: SearchBar(
-                  hintText: 'Search by name or phone',
+                  hintText: l10n.searchHint,
                   leading: const Icon(Icons.search),
                   elevation: MaterialStateProperty.all(0),
                   backgroundColor: MaterialStateProperty.all(
@@ -49,7 +51,7 @@ class _CustomerListScreenState extends State<CustomerListScreen> {
             ),
           ),
           body: customers.isEmpty
-              ? const Center(child: Text('No customers found'))
+              ? Center(child: Text(l10n.noCustomers))
               : ListView.builder(
                   padding: const EdgeInsets.all(16),
                   itemCount: customers.length,
@@ -170,7 +172,7 @@ class _CustomerListScreenState extends State<CustomerListScreen> {
                 },
               );
             },
-            label: const Text('Add Customer'),
+            label: Text(l10n.addCustomer),
             icon: const Icon(Icons.person_add),
           ),
         );

@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import '../providers/data_provider.dart';
+import '../l10n/app_localizations.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    
     return Consumer<DataProvider>(
       builder: (context, dataProvider, child) {
         double totalDebt = dataProvider.customers.fold(
@@ -20,7 +23,7 @@ class DashboardScreen extends StatelessWidget {
             .toList();
 
         return Scaffold(
-          appBar: AppBar(title: const Text('Dashboard')),
+          appBar: AppBar(title: Text(l10n.navDashboard)),
           body: SingleChildScrollView(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -30,7 +33,7 @@ class DashboardScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       child: _SummaryCard(
-                        title: 'Total Debt',
+                        title: l10n.totalDebt,
                         value:
                             '${NumberFormat("#,##0", "en_US").format(totalDebt)} Ks',
                         gradient: const LinearGradient(
@@ -44,7 +47,7 @@ class DashboardScreen extends StatelessWidget {
                     const SizedBox(width: 16),
                     Expanded(
                       child: _SummaryCard(
-                        title: 'Customers',
+                        title: l10n.customers,
                         value: '$totalCustomers',
                         gradient: const LinearGradient(
                           colors: [Color(0xFF3B82F6), Color(0xFF60A5FA)],
@@ -57,16 +60,16 @@ class DashboardScreen extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 24),
-                const Text(
-                  'Recent Transactions',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                Text(
+                  l10n.recentTransactions,
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 12),
                 if (recentTransactions.isEmpty)
-                  const Center(
+                  Center(
                     child: Padding(
-                      padding: EdgeInsets.all(24.0),
-                      child: Text('No transactions yet'),
+                      padding: const EdgeInsets.all(24.0),
+                      child: Text(l10n.noTransactions),
                     ),
                   )
                 else
