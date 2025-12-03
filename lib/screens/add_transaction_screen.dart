@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:intl/intl.dart';
+import 'package:pattern_formatter/pattern_formatter.dart';
 import '../data/models.dart';
 import '../providers/data_provider.dart';
 import '../l10n/app_localizations.dart';
@@ -38,7 +39,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
       final newTransaction = Transaction(
         id: const Uuid().v4(),
         customerId: widget.customerId,
-        amount: double.parse(_amountController.text),
+        amount: double.parse(_amountController.text.replaceAll(',', '')),
         type: widget.type,
         date: _selectedDate,
         note: _noteController.text,
@@ -75,20 +76,21 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                   suffixText: l10n.currencySymbol,
                   counterText: "", // Hide the character counter
                 ),
-                maxLength: 8,
+                maxLength: 15, // Increased length to accommodate commas
                 keyboardType: TextInputType.number,
+                inputFormatters: [ThousandsFormatter(allowFraction: true)],
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return l10n.amountRequired;
                   }
-                  final amount = double.tryParse(value);
+                  final amount = double.tryParse(value.replaceAll(',', ''));
                   if (amount == null) {
                     return l10n.invalidAmount;
                   }
-                    if (amount <= 0) {
-                      return l10n.amountMustBeGreaterThanZero;
-                    }
-                  
+                  if (amount <= 0) {
+                    return l10n.amountMustBeGreaterThanZero;
+                  }
+
                   // For payment, check if it exceeds total debt
                   if (widget.type == 'payment') {
                     final dataProvider = Provider.of<DataProvider>(
@@ -98,16 +100,16 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                     final customer = dataProvider.customers.firstWhere(
                       (c) => c.id == widget.customerId,
                     );
-                    
+
                     if (customer.totalDebt <= 0) {
                       return l10n.noDebtToRepay;
                     }
-                    
+
                     if (amount > customer.totalDebt) {
                       return '${l10n.paymentCannotExceedDebt}${NumberFormat("#,##0", "en_US").format(customer.totalDebt)} ${l10n.currencySymbol}';
                     }
                   }
-                  
+
                   return null;
                 },
               ),

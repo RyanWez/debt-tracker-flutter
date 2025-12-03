@@ -1,5 +1,5 @@
 name: debt_tracker
-description: "A new Flutter project."
+description: "အကြွေး စာရင်း"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
@@ -42,6 +42,7 @@ dependencies:
   uuid: ^4.0.0
   fluttertoast: ^9.0.0
   package_info_plus: ^9.0.0
+  pattern_formatter: ^4.0.1
 
 dev_dependencies:
   flutter_test:
