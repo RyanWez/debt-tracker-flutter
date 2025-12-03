@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/data_provider.dart';
 
 import 'dashboard_screen.dart';
 import 'customer_list_screen.dart';
@@ -19,6 +21,15 @@ class _MainScreenState extends State<MainScreen> {
     const CustomerListScreen(),
     const SettingsScreen(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    // Refresh data when the main screen loads (i.e., after login)
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<DataProvider>(context, listen: false).loadData();
+    });
+  }
 
   void _onItemTapped(int index) {
     setState(() {

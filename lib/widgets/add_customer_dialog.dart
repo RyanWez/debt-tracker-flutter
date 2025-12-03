@@ -74,18 +74,25 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
 
       if (!mounted) return;
 
-      Provider.of<DataProvider>(
+      final success = await Provider.of<DataProvider>(
         context,
         listen: false,
       ).addCustomer(newCustomer);
 
+      if (!mounted) return;
+
       setState(() => _isLoading = false);
 
-      _showToast(l10n.customerAddedSuccessfully);
-
-      // Close bottom sheet
-      if (mounted) {
-        Navigator.pop(context);
+      if (success) {
+        _showToast(l10n.customerAddedSuccessfully);
+        if (mounted) {
+          Navigator.pop(context);
+        }
+      } else {
+        _showToast(
+          'Failed to add customer. Please check connection.',
+          isError: true,
+        );
       }
     }
   }

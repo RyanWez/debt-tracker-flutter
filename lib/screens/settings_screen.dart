@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:nhost_flutter_auth/nhost_flutter_auth.dart';
 import '../providers/language_provider.dart';
 import '../providers/theme_provider.dart';
 import '../l10n/app_localizations.dart';
@@ -13,12 +14,46 @@ class SettingsScreen extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final languageProvider = Provider.of<LanguageProvider>(context);
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final auth = NhostAuthProvider.of(context);
+    final user = auth?.currentUser;
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.navSettings)),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
+          if (user != null) ...[
+            Card(
+              child: Column(
+                children: [
+                  ListTile(
+                    leading: const Icon(
+                      Icons.account_circle,
+                      color: Color(0xFFFACC15),
+                      size: 40,
+                    ),
+                    title: Text(
+                      (user.metadata?['shop_name'] as String?) ?? 'Shop Owner',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18,
+                      ),
+                    ),
+                    subtitle: Text(user.email ?? ''),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.logout, color: Colors.red),
+                      onPressed: () {
+                        auth?.signOut();
+                        // The AuthGate in main.dart will handle the redirection
+                        // but we can pop to be safe or just let the stream handle it
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 24),
+          ],
           Card(
             child: Column(
               children: [
