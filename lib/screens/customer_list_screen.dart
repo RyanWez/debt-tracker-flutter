@@ -113,7 +113,9 @@ class _CustomerListScreenState extends State<CustomerListScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        customer.name,
+                                        customer.name.length > 12
+                                            ? '${customer.name.substring(0, 12)}...'
+                                            : customer.name,
                                         style: const TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,

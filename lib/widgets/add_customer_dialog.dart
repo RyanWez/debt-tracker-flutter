@@ -220,7 +220,9 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                           width: 2,
                         ),
                       ),
+                      counterText: "", // Hide the character counter
                     ),
+                    maxLength: 24,
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
                         return l10n.nameRequired;

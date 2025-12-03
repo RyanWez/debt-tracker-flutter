@@ -73,7 +73,9 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                   labelText: l10n.amount,
                   prefixIcon: Icon(Icons.attach_money),
                   suffixText: l10n.currencySymbol,
+                  counterText: "", // Hide the character counter
                 ),
+                maxLength: 8,
                 keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
