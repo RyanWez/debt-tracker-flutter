@@ -5,7 +5,7 @@ class AppLocalizations {
 
   AppLocalizations(this.languageCode);
 
-  static AppLocalizations of(context) {
+  static AppLocalizations of(BuildContext context) {
     return Localizations.of<AppLocalizations>(context, AppLocalizations)!;
   }
 
@@ -14,36 +14,37 @@ class AppLocalizations {
     'en': {
       // App Title
       'app_title': 'Debt Tracker',
-      
+
       // Bottom Navigation
       'nav_dashboard': 'Dashboard',
       'nav_customers': 'Customers',
       'nav_settings': 'Settings',
-      
+
       // Dashboard Screen
       'total_debt': 'Total Debt',
       'customers': 'Customers',
       'recent_transactions': 'Recent Transactions',
       'no_transactions': 'No transactions yet',
-      
+
       // Customer List Screen
       'search_hint': 'Search by name or phone',
       'no_customers': 'No customers found',
       'add_customer': 'Add Customer',
-      
+
       // Customer Detail Screen
       'customer_details': 'Customer Details',
       'add_debt': 'Add Debt',
       'repay': 'Repay',
       'no_transactions_yet': 'No transactions yet',
       'delete_customer': 'Delete Customer',
-      'delete_customer_msg': 'Are you sure? This will delete all transaction history.',
+      'delete_customer_msg':
+          'Are you sure? This will delete all transaction history.',
       'cannot_delete': 'Cannot delete customer with outstanding debt: ',
-      
+
       // Transaction Types
       'debt_added': 'Debt Added',
       'payment_received': 'Payment Received',
-      
+
       // Add Customer Dialog
       'add_new_customer': 'Add New Customer',
       'edit_customer': 'Edit Customer',
@@ -54,7 +55,7 @@ class AppLocalizations {
       'add': 'Add',
       'name_required': 'Please enter customer name',
       'phone_required': 'Please enter phone number',
-      
+
       // Add Transaction Screen
       'add_transaction': 'Add Transaction',
       'amount': 'Amount',
@@ -62,18 +63,19 @@ class AppLocalizations {
       'amount_required': 'Please enter amount',
       'invalid_amount': 'Please enter valid amount',
       'transaction_added': 'Transaction added successfully',
-      
+
       // Delete Dialog
       'delete': 'Delete',
       'delete_transaction': 'Delete Transaction',
-      'delete_transaction_msg': 'Are you sure you want to delete this transaction?',
+      'delete_transaction_msg':
+          'Are you sure you want to delete this transaction?',
       'transaction_deleted': 'Transaction deleted',
-      
+
       // Settings
       'language': 'Language',
       'myanmar': 'Myanmar',
       'english': 'English',
-      
+
       // New keys
       'amount_must_be_greater_than_zero': 'Amount must be greater than 0',
       'no_debt_to_repay': 'No debt to repay',
@@ -94,36 +96,37 @@ class AppLocalizations {
     'my': {
       // App Title
       'app_title': 'အကြွေးစာရင်း',
-      
+
       // Bottom Navigation
       'nav_dashboard': 'Dashboard',
       'nav_customers': 'Customers',
       'nav_settings': 'Settings',
-      
+
       // Dashboard Screen
       'total_debt': 'စုစုပေါင်းအကြွေး',
       'customers': 'ဖောက်သည်များ',
       'recent_transactions': 'လတ်တလောမှတ်တမ်းများ',
       'no_transactions': 'မှတ်တမ်းမရှိသေးပါ',
-      
+
       // Customer List Screen
       'search_hint': 'နာမည် သို့မဟုတ် ဖုန်းနံပါတ်ဖြင့် ရှာပါ',
       'no_customers': 'ဖောက်သည် မတွေ့ပါ',
       'add_customer': 'ဖောက်သည် ထည့်မယ်',
-      
+
       // Customer Detail Screen
       'customer_details': 'Customer Details',
       'add_debt': 'အကြွေး မှတ်မယ်',
       'repay': 'ပြန်ဆပ်တာ မှတ်မယ်',
       'no_transactions_yet': 'မှတ်တမ်း မရှိသေးပါ',
       'delete_customer': 'ဖောက်သည် ဖျက်မယ်',
-      'delete_customer_msg': 'သေချာပါသလား? စာရင်းများ အားလုံး ပျက်သွားမှာ ဖြစ်ပါတယ်။',
+      'delete_customer_msg':
+          'သေချာပါသလား? စာရင်းများ အားလုံး ပျက်သွားမှာ ဖြစ်ပါတယ်။',
       'cannot_delete': 'အကြွေး ကျန်နေသေးသော ဖောက်သည်ကို ဖျက်၍ မရပါ: ',
-      
+
       // Transaction Types
       'debt_added': 'အကြွေးယူ',
       'payment_received': 'အကြွေး ရရှိခဲ့',
-      
+
       // Add Customer Dialog
       'add_new_customer': 'ဖောက်သည်အသစ် ထည့်မယ်',
       'edit_customer': 'ဖောက်သည် ပြင်မယ်',
@@ -134,7 +137,7 @@ class AppLocalizations {
       'add': 'ထည့်မယ်',
       'name_required': 'ဖောက်သည် အမည် ထည့်ပါ',
       'phone_required': 'ဖုန်းနံပါတ် ထည့်ပါ',
-      
+
       // Add Transaction Screen
       'add_transaction': 'Transaction ထည့်မယ်',
       'amount': 'ပမာဏ',
@@ -142,18 +145,18 @@ class AppLocalizations {
       'amount_required': 'ပမာဏ ထည့်ပါ',
       'invalid_amount': 'မှန်ကန်သော ပမာဏ ထည့်ပါ',
       'transaction_added': 'Transaction အောင်မြင်စွာ ထည့်ပြီးပါပြီ',
-      
+
       // Delete Dialog
       'delete': 'ဖျက်မယ်',
       'delete_transaction': 'Transaction ဖျက်မယ်',
       'delete_transaction_msg': 'ဒီ Transaction ကို ဖျက်မှာ သေချာပါသလား?',
       'transaction_deleted': 'Transaction ဖျက်ပြီးပါပြီ',
-      
+
       // Settings
       'language': 'ဘာသာစကား',
       'myanmar': 'မြန်မာ',
       'english': 'English',
-      
+
       // New keys
       'amount_must_be_greater_than_zero': 'ပမာဏသည် သုညထက် ကြီးရပါမည်',
       'no_debt_to_repay': 'ပြန်ဆပ်ရန် အကြွေး မရှိပါ',
@@ -220,14 +223,16 @@ class AppLocalizations {
   String get language => translate('language');
   String get myanmar => translate('myanmar');
   String get english => translate('english');
-  
+
   // New keys
-  String get amountMustBeGreaterThanZero => translate('amount_must_be_greater_than_zero');
+  String get amountMustBeGreaterThanZero =>
+      translate('amount_must_be_greater_than_zero');
   String get noDebtToRepay => translate('no_debt_to_repay');
   String get paymentCannotExceedDebt => translate('payment_cannot_exceed_debt');
   String get date => translate('date');
   String get customerAlreadyExists => translate('customer_already_exists');
-  String get customerUpdatedSuccessfully => translate('customer_updated_successfully');
+  String get customerUpdatedSuccessfully =>
+      translate('customer_updated_successfully');
   String get updateCustomerDetails => translate('update_customer_details');
   String get enterFullName => translate('enter_full_name');
   String get nameMinLength => translate('name_min_length');
@@ -235,7 +240,8 @@ class AppLocalizations {
   String get address => translate('address');
   String get appVersion => translate('app_version');
   String get fillInCustomerDetails => translate('fill_in_customer_details');
-  String get customerAddedSuccessfully => translate('customer_added_successfully');
+  String get customerAddedSuccessfully =>
+      translate('customer_added_successfully');
   String get currencySymbol => translate('currency_symbol');
 }
 

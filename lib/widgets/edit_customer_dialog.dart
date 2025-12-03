@@ -19,7 +19,7 @@ class _EditCustomerDialogState extends State<EditCustomerDialog> {
   late final TextEditingController _nameController;
   late final TextEditingController _phoneController;
   late final TextEditingController _addressController;
-  
+
   bool _isLoading = false;
 
   @override
@@ -53,7 +53,7 @@ class _EditCustomerDialogState extends State<EditCustomerDialog> {
   bool _isDuplicateName(String name) {
     final dataProvider = Provider.of<DataProvider>(context, listen: false);
     return dataProvider.customers.any(
-      (customer) => 
+      (customer) =>
           customer.name.toLowerCase() == name.toLowerCase() &&
           customer.id != widget.customer.id, // Exclude current customer
     );
@@ -63,7 +63,7 @@ class _EditCustomerDialogState extends State<EditCustomerDialog> {
     final l10n = AppLocalizations.of(context);
     if (_formKey.currentState!.validate()) {
       final name = _nameController.text.trim();
-      
+
       // Check for duplicate name
       if (_isDuplicateName(name)) {
         _showToast(l10n.customerAlreadyExists, isError: true);
@@ -83,15 +83,17 @@ class _EditCustomerDialogState extends State<EditCustomerDialog> {
         lastTransactionDate: widget.customer.lastTransactionDate,
       );
 
+      if (!mounted) return;
+
       Provider.of<DataProvider>(
         context,
         listen: false,
       ).updateCustomer(updatedCustomer);
 
       setState(() => _isLoading = false);
-      
+
       _showToast(l10n.customerUpdatedSuccessfully);
-      
+
       if (mounted) {
         Navigator.pop(context);
       }
@@ -103,17 +105,13 @@ class _EditCustomerDialogState extends State<EditCustomerDialog> {
     final theme = Theme.of(context);
     final bottomInset = MediaQuery.of(context).viewInsets.bottom;
     final l10n = AppLocalizations.of(context);
-    
+
     return Align(
       alignment: Alignment.center,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeOutCubic,
-        margin: EdgeInsets.only(
-          left: 16,
-          right: 16,
-          bottom: bottomInset + 16,
-        ),
+        margin: EdgeInsets.only(left: 16, right: 16, bottom: bottomInset + 16),
         constraints: const BoxConstraints(maxWidth: 500),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(28),
@@ -122,12 +120,12 @@ class _EditCustomerDialogState extends State<EditCustomerDialog> {
             end: Alignment.bottomRight,
             colors: [
               Colors.white,
-              theme.colorScheme.primary.withOpacity(0.02),
+              theme.colorScheme.primary.withValues(alpha: 0.02),
             ],
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.15),
+              color: Colors.black.withValues(alpha: 0.15),
               blurRadius: 20,
               offset: const Offset(0, 10),
             ),
@@ -152,13 +150,15 @@ class _EditCustomerDialogState extends State<EditCustomerDialog> {
                           gradient: LinearGradient(
                             colors: [
                               theme.colorScheme.primary,
-                              theme.colorScheme.primary.withOpacity(0.7),
+                              theme.colorScheme.primary.withValues(alpha: 0.7),
                             ],
                           ),
                           borderRadius: BorderRadius.circular(16),
                           boxShadow: [
                             BoxShadow(
-                              color: theme.colorScheme.primary.withOpacity(0.3),
+                              color: theme.colorScheme.primary.withValues(
+                                alpha: 0.3,
+                              ),
                               blurRadius: 8,
                               offset: const Offset(0, 4),
                             ),
@@ -181,19 +181,19 @@ class _EditCustomerDialogState extends State<EditCustomerDialog> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                              Text(
-                                l10n.updateCustomerDetails,
-                                style: theme.textTheme.bodySmall?.copyWith(
-                                  color: Colors.grey.shade600,
-                                ),
+                            Text(
+                              l10n.updateCustomerDetails,
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                color: Colors.grey.shade600,
                               ),
+                            ),
                           ],
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 32),
-                  
+
                   // Name Field
                   TextFormField(
                     controller: _nameController,
@@ -244,7 +244,7 @@ class _EditCustomerDialogState extends State<EditCustomerDialog> {
                     },
                   ),
                   const SizedBox(height: 20),
-                  
+
                   // Phone Field
                   TextFormField(
                     controller: _phoneController,
@@ -276,7 +276,7 @@ class _EditCustomerDialogState extends State<EditCustomerDialog> {
                     keyboardType: TextInputType.phone,
                   ),
                   const SizedBox(height: 20),
-                  
+
                   // Address Field
                   TextFormField(
                     controller: _addressController,
@@ -310,7 +310,7 @@ class _EditCustomerDialogState extends State<EditCustomerDialog> {
                     ),
                   ),
                   const SizedBox(height: 32),
-                  
+
                   // Action Buttons
                   Row(
                     children: [

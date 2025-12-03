@@ -37,8 +37,8 @@ class _CustomerListScreenState extends State<CustomerListScreen> {
                 child: SearchBar(
                   hintText: l10n.searchHint,
                   leading: const Icon(Icons.search),
-                  elevation: MaterialStateProperty.all(0),
-                  backgroundColor: MaterialStateProperty.all(
+                  elevation: WidgetStateProperty.all(0),
+                  backgroundColor: WidgetStateProperty.all(
                     Colors.grey.shade100,
                   ),
                   onChanged: (value) {
@@ -60,16 +60,17 @@ class _CustomerListScreenState extends State<CustomerListScreen> {
                     return TweenAnimationBuilder<double>(
                       tween: Tween(begin: 0, end: 1),
                       duration: Duration(
-                        milliseconds: 400 + (index * 80), // Slower, more elegant
+                        milliseconds:
+                            400 + (index * 80), // Slower, more elegant
                       ),
                       curve: Curves.easeOutCubic, // Smooth easing curve
                       builder: (context, value, child) {
                         return Transform.translate(
-                          offset: Offset(0, 30 * (1 - value)), // Larger slide distance
-                          child: Opacity(
-                            opacity: value,
-                            child: child,
-                          ),
+                          offset: Offset(
+                            0,
+                            30 * (1 - value),
+                          ), // Larger slide distance
+                          child: Opacity(opacity: value, child: child),
                         );
                       },
                       child: Card(
@@ -80,8 +81,9 @@ class _CustomerListScreenState extends State<CustomerListScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    CustomerDetailScreen(customerId: customer.id),
+                                builder: (context) => CustomerDetailScreen(
+                                  customerId: customer.id,
+                                ),
                               ),
                             );
                           },
@@ -110,7 +112,8 @@ class _CustomerListScreenState extends State<CustomerListScreen> {
                                 const SizedBox(width: 16),
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         customer.name.length > 12
@@ -154,24 +157,28 @@ class _CustomerListScreenState extends State<CustomerListScreen> {
                 pageBuilder: (context, animation, secondaryAnimation) {
                   return const AddCustomerDialog();
                 },
-                transitionBuilder: (context, animation, secondaryAnimation, child) {
-                  final curvedAnimation = CurvedAnimation(
-                    parent: animation,
-                    curve: Curves.easeOutCubic,
-                    reverseCurve: Curves.easeInCubic,
-                  );
-                  
-                  return SlideTransition(
-                    position: Tween<Offset>(
-                      begin: const Offset(0, -1), // Start from top (off screen)
-                      end: Offset.zero, // End at normal position
-                    ).animate(curvedAnimation),
-                    child: FadeTransition(
-                      opacity: curvedAnimation,
-                      child: child,
-                    ),
-                  );
-                },
+                transitionBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                      final curvedAnimation = CurvedAnimation(
+                        parent: animation,
+                        curve: Curves.easeOutCubic,
+                        reverseCurve: Curves.easeInCubic,
+                      );
+
+                      return SlideTransition(
+                        position: Tween<Offset>(
+                          begin: const Offset(
+                            0,
+                            -1,
+                          ), // Start from top (off screen)
+                          end: Offset.zero, // End at normal position
+                        ).animate(curvedAnimation),
+                        child: FadeTransition(
+                          opacity: curvedAnimation,
+                          child: child,
+                        ),
+                      );
+                    },
               );
             },
             label: Text(l10n.addCustomer),

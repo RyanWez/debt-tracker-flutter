@@ -35,27 +35,37 @@ class SettingsScreen extends StatelessWidget {
                   ),
                 ),
                 const Divider(height: 1),
-                RadioListTile<String>(
+                ListTile(
                   title: Text(l10n.english),
-                  value: 'en',
-                  groupValue: languageProvider.locale.languageCode,
-                  onChanged: (value) {
-                    if (value != null) {
-                      languageProvider.setLocale(Locale(value));
-                    }
-                  },
-                  activeColor: const Color(0xFFFACC15),
+                  leading: Radio<String>(
+                    value: 'en',
+                    // ignore: deprecated_member_use
+                    groupValue: languageProvider.locale.languageCode,
+                    // ignore: deprecated_member_use
+                    onChanged: (value) {
+                      if (value != null) {
+                        languageProvider.setLocale(Locale(value));
+                      }
+                    },
+                    activeColor: const Color(0xFFFACC15),
+                  ),
+                  onTap: () => languageProvider.setLocale(const Locale('en')),
                 ),
-                RadioListTile<String>(
+                ListTile(
                   title: Text(l10n.myanmar),
-                  value: 'my',
-                  groupValue: languageProvider.locale.languageCode,
-                  onChanged: (value) {
-                    if (value != null) {
-                      languageProvider.setLocale(Locale(value));
-                    }
-                  },
-                  activeColor: const Color(0xFFFACC15),
+                  leading: Radio<String>(
+                    value: 'my',
+                    // ignore: deprecated_member_use
+                    groupValue: languageProvider.locale.languageCode,
+                    // ignore: deprecated_member_use
+                    onChanged: (value) {
+                      if (value != null) {
+                        languageProvider.setLocale(Locale(value));
+                      }
+                    },
+                    activeColor: const Color(0xFFFACC15),
+                  ),
+                  onTap: () => languageProvider.setLocale(const Locale('my')),
                 ),
               ],
             ),
@@ -87,10 +97,7 @@ class SettingsScreen extends StatelessWidget {
                   const SizedBox(height: 8),
                   const Text(
                     '1.0.0',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                   ),
                 ],
               ),

@@ -56,24 +56,25 @@ class CustomerDetailScreen extends StatelessWidget {
                     pageBuilder: (context, animation, secondaryAnimation) {
                       return EditCustomerDialog(customer: customer);
                     },
-                    transitionBuilder: (context, animation, secondaryAnimation, child) {
-                      final curvedAnimation = CurvedAnimation(
-                        parent: animation,
-                        curve: Curves.easeOutCubic,
-                        reverseCurve: Curves.easeInCubic,
-                      );
-                      
-                      return SlideTransition(
-                        position: Tween<Offset>(
-                          begin: const Offset(0, -1),
-                          end: Offset.zero,
-                        ).animate(curvedAnimation),
-                        child: FadeTransition(
-                          opacity: curvedAnimation,
-                          child: child,
-                        ),
-                      );
-                    },
+                    transitionBuilder:
+                        (context, animation, secondaryAnimation, child) {
+                          final curvedAnimation = CurvedAnimation(
+                            parent: animation,
+                            curve: Curves.easeOutCubic,
+                            reverseCurve: Curves.easeInCubic,
+                          );
+
+                          return SlideTransition(
+                            position: Tween<Offset>(
+                              begin: const Offset(0, -1),
+                              end: Offset.zero,
+                            ).animate(curvedAnimation),
+                            child: FadeTransition(
+                              opacity: curvedAnimation,
+                              child: child,
+                            ),
+                          );
+                        },
                   );
                 },
               ),
@@ -88,14 +89,12 @@ class CustomerDetailScreen extends StatelessWidget {
                     );
                     return;
                   }
-                  
+
                   showDialog(
                     context: context,
                     builder: (ctx) => AlertDialog(
                       title: Text(l10n.deleteCustomer),
-                      content: Text(
-                        l10n.deleteCustomerMsg,
-                      ),
+                      content: Text(l10n.deleteCustomerMsg),
                       actions: [
                         TextButton(
                           onPressed: () => Navigator.pop(ctx),
@@ -128,7 +127,7 @@ class CustomerDetailScreen extends StatelessWidget {
                   color: Colors.white,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withOpacity(0.1),
+                      color: Colors.grey.withValues(alpha: 0.1),
                       blurRadius: 10,
                       offset: const Offset(0, 5),
                     ),
@@ -224,10 +223,11 @@ class CustomerDetailScreen extends StatelessWidget {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => AddTransactionScreen(
-                                          customerId: customerId,
-                                          type: 'payment',
-                                        ),
+                                        builder: (context) =>
+                                            AddTransactionScreen(
+                                              customerId: customerId,
+                                              type: 'payment',
+                                            ),
                                       ),
                                     );
                                   }
@@ -273,12 +273,16 @@ class CustomerDetailScreen extends StatelessWidget {
                           return TweenAnimationBuilder<double>(
                             tween: Tween(begin: 0, end: 1),
                             duration: Duration(
-                              milliseconds: 400 + (index * 80), // Slower, more elegant
+                              milliseconds:
+                                  400 + (index * 80), // Slower, more elegant
                             ),
                             curve: Curves.easeOutCubic, // Smooth easing curve
                             builder: (context, value, child) {
                               return Transform.translate(
-                                offset: Offset(0, 30 * (1 - value)), // Larger slide distance
+                                offset: Offset(
+                                  0,
+                                  30 * (1 - value),
+                                ), // Larger slide distance
                                 child: child,
                               );
                             },
@@ -290,16 +294,16 @@ class CustomerDetailScreen extends StatelessWidget {
                                   context: context,
                                   builder: (ctx) => AlertDialog(
                                     title: Text(l10n.deleteTransaction),
-                                    content: Text(
-                                      l10n.deleteTransactionMsg,
-                                    ),
+                                    content: Text(l10n.deleteTransactionMsg),
                                     actions: [
                                       TextButton(
-                                        onPressed: () => Navigator.pop(ctx, false),
+                                        onPressed: () =>
+                                            Navigator.pop(ctx, false),
                                         child: Text(l10n.cancel),
                                       ),
                                       TextButton(
-                                        onPressed: () => Navigator.pop(ctx, true),
+                                        onPressed: () =>
+                                            Navigator.pop(ctx, true),
                                         child: Text(
                                           l10n.delete,
                                           style: TextStyle(color: Colors.red),

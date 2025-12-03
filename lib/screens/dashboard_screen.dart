@@ -10,7 +10,7 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    
+
     return Consumer<DataProvider>(
       builder: (context, dataProvider, child) {
         double totalDebt = dataProvider.customers.fold(
@@ -62,7 +62,10 @@ class DashboardScreen extends StatelessWidget {
                 const SizedBox(height: 24),
                 Text(
                   l10n.recentTransactions,
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(height: 12),
                 if (recentTransactions.isEmpty)
@@ -86,16 +89,17 @@ class DashboardScreen extends StatelessWidget {
                       return TweenAnimationBuilder<double>(
                         tween: Tween(begin: 0, end: 1),
                         duration: Duration(
-                          milliseconds: 400 + (index * 80), // Slower, more elegant
+                          milliseconds:
+                              400 + (index * 80), // Slower, more elegant
                         ),
                         curve: Curves.easeOutCubic, // Smooth easing curve
                         builder: (context, value, child) {
                           return Transform.translate(
-                            offset: Offset(0, 30 * (1 - value)), // Larger slide distance
-                            child: Opacity(
-                              opacity: value,
-                              child: child,
-                            ),
+                            offset: Offset(
+                              0,
+                              30 * (1 - value),
+                            ), // Larger slide distance
+                            child: Opacity(opacity: value, child: child),
                           );
                         },
                         child: Card(
@@ -171,7 +175,7 @@ class _SummaryCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: gradient.colors.first.withOpacity(0.3),
+            color: gradient.colors.first.withValues(alpha: 0.3),
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),

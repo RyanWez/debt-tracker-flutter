@@ -18,7 +18,7 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
   final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
   final _addressController = TextEditingController();
-  
+
   bool _isLoading = false;
 
   @override
@@ -52,7 +52,7 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
     final l10n = AppLocalizations.of(context);
     if (_formKey.currentState!.validate()) {
       final name = _nameController.text.trim();
-      
+
       // Check for duplicate name
       if (_isDuplicateName(name)) {
         _showToast(l10n.customerAlreadyExists, isError: true);
@@ -72,15 +72,17 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
         lastTransactionDate: DateTime.now(),
       );
 
+      if (!mounted) return;
+
       Provider.of<DataProvider>(
         context,
         listen: false,
       ).addCustomer(newCustomer);
 
       setState(() => _isLoading = false);
-      
+
       _showToast(l10n.customerAddedSuccessfully);
-      
+
       // Close bottom sheet
       if (mounted) {
         Navigator.pop(context);
@@ -93,17 +95,13 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
     final theme = Theme.of(context);
     final bottomInset = MediaQuery.of(context).viewInsets.bottom;
     final l10n = AppLocalizations.of(context);
-    
+
     return Align(
       alignment: Alignment.center, // Changed from topCenter to center
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeOutCubic,
-        margin: EdgeInsets.only(
-          left: 16,
-          right: 16,
-          bottom: bottomInset + 16,
-        ),
+        margin: EdgeInsets.only(left: 16, right: 16, bottom: bottomInset + 16),
         constraints: const BoxConstraints(maxWidth: 500),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(28),
@@ -112,12 +110,12 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
             end: Alignment.bottomRight,
             colors: [
               Colors.white,
-              theme.colorScheme.primary.withOpacity(0.02),
+              theme.colorScheme.primary.withValues(alpha: 0.02),
             ],
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.15),
+              color: Colors.black.withValues(alpha: 0.15),
               blurRadius: 20,
               offset: const Offset(0, 10),
             ),
@@ -142,13 +140,15 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                           gradient: LinearGradient(
                             colors: [
                               theme.colorScheme.primary,
-                              theme.colorScheme.primary.withOpacity(0.7),
+                              theme.colorScheme.primary.withValues(alpha: 0.7),
                             ],
                           ),
                           borderRadius: BorderRadius.circular(16),
                           boxShadow: [
                             BoxShadow(
-                              color: theme.colorScheme.primary.withOpacity(0.3),
+                              color: theme.colorScheme.primary.withValues(
+                                alpha: 0.3,
+                              ),
                               blurRadius: 8,
                               offset: const Offset(0, 4),
                             ),
@@ -183,7 +183,7 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                     ],
                   ),
                   const SizedBox(height: 32),
-                  
+
                   // Name Field with enhanced styling
                   TextFormField(
                     controller: _nameController,
@@ -234,7 +234,7 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                     },
                   ),
                   const SizedBox(height: 20),
-                  
+
                   // Phone Field
                   TextFormField(
                     controller: _phoneController,
@@ -266,7 +266,7 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                     keyboardType: TextInputType.phone,
                   ),
                   const SizedBox(height: 20),
-                  
+
                   // Address Field
                   TextFormField(
                     controller: _addressController,
@@ -300,7 +300,7 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                     ),
                   ),
                   const SizedBox(height: 32),
-                  
+
                   // Action Buttons
                   Row(
                     children: [
