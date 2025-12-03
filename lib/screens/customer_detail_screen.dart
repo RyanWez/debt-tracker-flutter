@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../providers/data_provider.dart';
 import '../widgets/edit_customer_dialog.dart';
+import '../l10n/app_localizations.dart';
 import 'add_transaction_screen.dart';
 
 class CustomerDetailScreen extends StatelessWidget {
@@ -25,6 +26,7 @@ class CustomerDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Consumer<DataProvider>(
       builder: (context, dataProvider, child) {
         final customer = dataProvider.customers.firstWhere(
@@ -40,7 +42,7 @@ class CustomerDetailScreen extends StatelessWidget {
 
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Customer Details'),
+            title: Text(l10n.customerDetails),
             actions: [
               IconButton(
                 icon: const Icon(Icons.edit_outlined),
@@ -48,7 +50,7 @@ class CustomerDetailScreen extends StatelessWidget {
                   showGeneralDialog(
                     context: context,
                     barrierDismissible: true,
-                    barrierLabel: 'Edit Customer',
+                    barrierLabel: l10n.editCustomer,
                     barrierColor: Colors.black54,
                     transitionDuration: const Duration(milliseconds: 300),
                     pageBuilder: (context, animation, secondaryAnimation) {
@@ -81,7 +83,7 @@ class CustomerDetailScreen extends StatelessWidget {
                   // Check if customer has debt
                   if (customer.totalDebt > 0) {
                     _showToast(
-                      'Cannot delete customer with outstanding debt: ${NumberFormat("#,##0", "en_US").format(customer.totalDebt)} Ks',
+                      '${l10n.cannotDelete}${NumberFormat("#,##0", "en_US").format(customer.totalDebt)} ${l10n.currencySymbol}',
                       isError: true,
                     );
                     return;
@@ -90,14 +92,14 @@ class CustomerDetailScreen extends StatelessWidget {
                   showDialog(
                     context: context,
                     builder: (ctx) => AlertDialog(
-                      title: const Text('Delete Customer'),
-                      content: const Text(
-                        'Are you sure? This will delete all transaction history.',
+                      title: Text(l10n.deleteCustomer),
+                      content: Text(
+                        l10n.deleteCustomerMsg,
                       ),
                       actions: [
                         TextButton(
                           onPressed: () => Navigator.pop(ctx),
-                          child: const Text('Cancel'),
+                          child: Text(l10n.cancel),
                         ),
                         TextButton(
                           onPressed: () {
@@ -105,8 +107,8 @@ class CustomerDetailScreen extends StatelessWidget {
                             Navigator.pop(ctx); // Close dialog
                             Navigator.pop(context); // Go back to list
                           },
-                          child: const Text(
-                            'Delete',
+                          child: Text(
+                            l10n.delete,
                             style: TextStyle(color: Colors.red),
                           ),
                         ),
@@ -171,7 +173,7 @@ class CustomerDetailScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 24),
                     Text(
-                      'Total Debt',
+                      l10n.totalDebt,
                       style: TextStyle(
                         color: Colors.grey.shade600,
                         fontSize: 14,
@@ -180,7 +182,7 @@ class CustomerDetailScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      '${NumberFormat("#,##0", "en_US").format(customer.totalDebt)} Ks',
+                      '${NumberFormat("#,##0", "en_US").format(customer.totalDebt)} ${l10n.currencySymbol}',
                       style: TextStyle(
                         fontSize: 36,
                         fontWeight: FontWeight.bold,
@@ -207,7 +209,7 @@ class CustomerDetailScreen extends StatelessWidget {
                               );
                             },
                             icon: const Icon(Icons.arrow_downward),
-                            label: const Text('Add Debt'),
+                            label: Text(l10n.addDebt),
                             style: FilledButton.styleFrom(
                               backgroundColor: Colors.red,
                               padding: const EdgeInsets.symmetric(vertical: 12),
@@ -231,7 +233,7 @@ class CustomerDetailScreen extends StatelessWidget {
                                   }
                                 : null, // Disabled when no debt
                             icon: const Icon(Icons.arrow_upward),
-                            label: const Text('Repay'),
+                            label: Text(l10n.repay),
                             style: FilledButton.styleFrom(
                               backgroundColor: Colors.green,
                               disabledBackgroundColor: Colors.grey.shade300,
@@ -257,7 +259,7 @@ class CustomerDetailScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 16),
                             Text(
-                              'No transactions yet',
+                              l10n.noTransactionsYet,
                               style: TextStyle(color: Colors.grey.shade500),
                             ),
                           ],
@@ -287,19 +289,19 @@ class CustomerDetailScreen extends StatelessWidget {
                                 return await showDialog(
                                   context: context,
                                   builder: (ctx) => AlertDialog(
-                                    title: const Text('Delete Transaction'),
-                                    content: const Text(
-                                      'Are you sure you want to delete this transaction?',
+                                    title: Text(l10n.deleteTransaction),
+                                    content: Text(
+                                      l10n.deleteTransactionMsg,
                                     ),
                                     actions: [
                                       TextButton(
                                         onPressed: () => Navigator.pop(ctx, false),
-                                        child: const Text('Cancel'),
+                                        child: Text(l10n.cancel),
                                       ),
                                       TextButton(
                                         onPressed: () => Navigator.pop(ctx, true),
-                                        child: const Text(
-                                          'Delete',
+                                        child: Text(
+                                          l10n.delete,
                                           style: TextStyle(color: Colors.red),
                                         ),
                                       ),
@@ -310,8 +312,8 @@ class CustomerDetailScreen extends StatelessWidget {
                               onDismissed: (direction) {
                                 dataProvider.deleteTransaction(transaction.id);
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Transaction deleted'),
+                                  SnackBar(
+                                    content: Text(l10n.transactionDeleted),
                                     duration: Duration(seconds: 2),
                                   ),
                                 );
@@ -348,8 +350,8 @@ class CustomerDetailScreen extends StatelessWidget {
                                   ),
                                   title: Text(
                                     transaction.type == 'debt'
-                                        ? 'Debt Added'
-                                        : 'Payment Received',
+                                        ? l10n.debtAdded
+                                        : l10n.paymentReceived,
                                     style: const TextStyle(
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -357,6 +359,7 @@ class CustomerDetailScreen extends StatelessWidget {
                                   subtitle: Text(
                                     DateFormat(
                                       'MMM d, yyyy • h:mm a',
+                                      'en',
                                     ).format(transaction.date),
                                   ),
                                   trailing: Text(

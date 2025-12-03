@@ -35,7 +35,7 @@ class DashboardScreen extends StatelessWidget {
                       child: _SummaryCard(
                         title: l10n.totalDebt,
                         value:
-                            '${NumberFormat("#,##0", "en_US").format(totalDebt)} Ks',
+                            '${NumberFormat("#,##0", "en_US").format(totalDebt)} ${l10n.currencySymbol}',
                         gradient: const LinearGradient(
                           colors: [Color(0xFFEF4444), Color(0xFFF87171)],
                           begin: Alignment.topLeft,
@@ -123,6 +123,7 @@ class DashboardScreen extends StatelessWidget {
                             subtitle: Text(
                               DateFormat(
                                 'MMM d, h:mm a',
+                                'en',
                               ).format(transaction.date),
                             ),
                             trailing: Text(

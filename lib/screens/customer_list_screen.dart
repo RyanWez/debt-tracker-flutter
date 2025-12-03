@@ -146,7 +146,7 @@ class _CustomerListScreenState extends State<CustomerListScreen> {
               showGeneralDialog(
                 context: context,
                 barrierDismissible: true,
-                barrierLabel: 'Add Customer',
+                barrierLabel: l10n.addCustomer,
                 barrierColor: Colors.black54,
                 transitionDuration: const Duration(milliseconds: 300),
                 pageBuilder: (context, animation, secondaryAnimation) {

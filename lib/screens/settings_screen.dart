@@ -76,7 +76,7 @@ class SettingsScreen extends StatelessWidget {
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        'App Version',
+                        l10n.appVersion,
                         style: TextStyle(
                           color: Colors.grey.shade600,
                           fontSize: 14,

@@ -73,21 +73,38 @@ class AppLocalizations {
       'language': 'Language',
       'myanmar': 'Myanmar',
       'english': 'English',
+      
+      // New keys
+      'amount_must_be_greater_than_zero': 'Amount must be greater than 0',
+      'no_debt_to_repay': 'No debt to repay',
+      'payment_cannot_exceed_debt': 'Payment cannot exceed debt: ',
+      'date': 'Date',
+      'customer_already_exists': 'Customer already exists!',
+      'customer_updated_successfully': 'Customer updated successfully!',
+      'update_customer_details': 'Update customer details',
+      'enter_full_name': 'Enter full name',
+      'name_min_length': 'Name must be at least 2 characters',
+      'optional': 'Optional',
+      'address': 'Address',
+      'app_version': 'App Version',
+      'fill_in_customer_details': 'Fill in customer details',
+      'customer_added_successfully': 'Customer added successfully!',
+      'currency_symbol': 'Ks',
     },
     'my': {
       // App Title
       'app_title': 'အကြွေးစာရင်း',
       
       // Bottom Navigation
-      'nav_dashboard': 'မူလစာမျက်နှာ',
-      'nav_customers': 'ဖောက်သည်များ',
-      'nav_settings': 'ဆက်တင်များ',
+      'nav_dashboard': 'Dashboard',
+      'nav_customers': 'Customers',
+      'nav_settings': 'Settings',
       
       // Dashboard Screen
-      'total_debt': 'စုစုပေါင်း အကြွေး',
-      'customers': 'ဖောက်သည်',
-      'recent_transactions': 'လတ်တလော စာရင်းများ',
-      'no_transactions': 'စာရင်းများ မရှိသေးပါ',
+      'total_debt': 'Total Debt',
+      'customers': 'Customers',
+      'recent_transactions': 'Recent Transactions',
+      'no_transactions': 'Transactions မရှိသေးပါ',
       
       // Customer List Screen
       'search_hint': 'နာမည် သို့မဟုတ် ဖုန်းနံပါတ်ဖြင့် ရှာပါ',
@@ -95,17 +112,17 @@ class AppLocalizations {
       'add_customer': 'ဖောက်သည် ထည့်မယ်',
       
       // Customer Detail Screen
-      'customer_details': 'ဖောက်သည် အသေးစိတ်',
-      'add_debt': 'အကြွေး ထည့်မယ်',
-      'repay': 'ပြန်ဆပ်မယ်',
-      'no_transactions_yet': 'စာရင်းများ မရှိသေးပါ',
+      'customer_details': 'Customer Details',
+      'add_debt': 'Debt ထည့်မယ်',
+      'repay': 'Repay',
+      'no_transactions_yet': 'Transactions မရှိသေးပါ',
       'delete_customer': 'ဖောက်သည် ဖျက်မယ်',
       'delete_customer_msg': 'သေချာပါသလား? စာရင်းများ အားလုံး ပျက်သွားမှာ ဖြစ်ပါတယ်။',
       'cannot_delete': 'အကြွေး ကျန်နေသေးသော ဖောက်သည်ကို ဖျက်၍ မရပါ: ',
       
       // Transaction Types
-      'debt_added': 'အကြွေး ထည့်ခဲ့',
-      'payment_received': 'ပြန်ဆပ်ခဲ့',
+      'debt_added': 'Debt ထည့်ခဲ့',
+      'payment_received': 'Payment ရရှိခဲ့',
       
       // Add Customer Dialog
       'add_new_customer': 'ဖောက်သည်အသစ် ထည့်မယ်',
@@ -119,23 +136,40 @@ class AppLocalizations {
       'phone_required': 'ဖုန်းနံပါတ် ထည့်ပါ',
       
       // Add Transaction Screen
-      'add_transaction': 'စာရင်း ထည့်မယ်',
+      'add_transaction': 'Transaction ထည့်မယ်',
       'amount': 'ပမာဏ',
       'note': 'မှတ်ချက် (ချန်လှပ်နိုင်)',
       'amount_required': 'ပမာဏ ထည့်ပါ',
       'invalid_amount': 'မှန်ကန်သော ပမာဏ ထည့်ပါ',
-      'transaction_added': 'စာရင်း အောင်မြင်စွာ ထည့်ပြီးပါပြီ',
+      'transaction_added': 'Transaction အောင်မြင်စွာ ထည့်ပြီးပါပြီ',
       
       // Delete Dialog
       'delete': 'ဖျက်မယ်',
-      'delete_transaction': 'စာရင်း ဖျက်မယ်',
-      'delete_transaction_msg': 'ဒီစာရင်းကို ဖျက်မှာ သေချာပါသလား?',
-      'transaction_deleted': 'စာရင်း ဖျက်ပြီးပါပြီ',
+      'delete_transaction': 'Transaction ဖျက်မယ်',
+      'delete_transaction_msg': 'ဒီ Transaction ကို ဖျက်မှာ သေချာပါသလား?',
+      'transaction_deleted': 'Transaction ဖျက်ပြီးပါပြီ',
       
       // Settings
       'language': 'ဘာသာစကား',
       'myanmar': 'မြန်မာ',
       'english': 'English',
+      
+      // New keys
+      'amount_must_be_greater_than_zero': 'ပမာဏသည် သုညထက် ကြီးရပါမည်',
+      'no_debt_to_repay': 'ပြန်ဆပ်ရန် အကြွေး မရှိပါ',
+      'payment_cannot_exceed_debt': 'ပေးချေငွေသည် အကြွေးထက် မများရပါ: ',
+      'date': 'နေ့စွဲ',
+      'customer_already_exists': 'ဖောက်သည် ရှိပြီးသား ဖြစ်သည်',
+      'customer_updated_successfully': 'ဖောက်သည် အချက်အလက် ပြင်ဆင်ပြီးပါပြီ',
+      'update_customer_details': 'ဖောက်သည် အချက်အလက်များ ပြင်ဆင်ရန်',
+      'enter_full_name': 'နာမည်အပြည့်အစုံ ထည့်ပါ',
+      'name_min_length': 'နာမည်သည် အနည်းဆုံး ၂ လုံး ရှိရပါမည်',
+      'optional': 'ချန်လှပ်နိုင်',
+      'address': 'လိပ်စာ',
+      'app_version': 'App Version',
+      'fill_in_customer_details': 'Customer အချက်အလက်များ ဖြည့်သွင်းပါ',
+      'customer_added_successfully': 'Customer အသစ် ထည့်သွင်းပြီးပါပြီ',
+      'currency_symbol': 'Ks',
     },
   };
 
@@ -186,6 +220,23 @@ class AppLocalizations {
   String get language => translate('language');
   String get myanmar => translate('myanmar');
   String get english => translate('english');
+  
+  // New keys
+  String get amountMustBeGreaterThanZero => translate('amount_must_be_greater_than_zero');
+  String get noDebtToRepay => translate('no_debt_to_repay');
+  String get paymentCannotExceedDebt => translate('payment_cannot_exceed_debt');
+  String get date => translate('date');
+  String get customerAlreadyExists => translate('customer_already_exists');
+  String get customerUpdatedSuccessfully => translate('customer_updated_successfully');
+  String get updateCustomerDetails => translate('update_customer_details');
+  String get enterFullName => translate('enter_full_name');
+  String get nameMinLength => translate('name_min_length');
+  String get optional => translate('optional');
+  String get address => translate('address');
+  String get appVersion => translate('app_version');
+  String get fillInCustomerDetails => translate('fill_in_customer_details');
+  String get customerAddedSuccessfully => translate('customer_added_successfully');
+  String get currencySymbol => translate('currency_symbol');
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

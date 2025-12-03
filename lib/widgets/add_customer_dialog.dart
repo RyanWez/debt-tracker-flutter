@@ -4,6 +4,7 @@ import 'package:uuid/uuid.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../data/models.dart';
 import '../providers/data_provider.dart';
+import '../l10n/app_localizations.dart';
 
 class AddCustomerDialog extends StatefulWidget {
   const AddCustomerDialog({super.key});
@@ -48,12 +49,13 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
   }
 
   Future<void> _saveCustomer() async {
+    final l10n = AppLocalizations.of(context);
     if (_formKey.currentState!.validate()) {
       final name = _nameController.text.trim();
       
       // Check for duplicate name
       if (_isDuplicateName(name)) {
-        _showToast('Customer "$name" already exists!', isError: true);
+        _showToast(l10n.customerAlreadyExists, isError: true);
         return;
       }
 
@@ -77,7 +79,7 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
 
       setState(() => _isLoading = false);
       
-      _showToast('✓ Customer "$name" added successfully!');
+      _showToast(l10n.customerAddedSuccessfully);
       
       // Close bottom sheet
       if (mounted) {
@@ -90,6 +92,7 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final bottomInset = MediaQuery.of(context).viewInsets.bottom;
+    final l10n = AppLocalizations.of(context);
     
     return Align(
       alignment: Alignment.center, // Changed from topCenter to center
@@ -163,13 +166,13 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Add New Customer',
+                              l10n.addNewCustomer,
                               style: theme.textTheme.headlineSmall?.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             Text(
-                              'Fill in customer details',
+                              l10n.fillInCustomerDetails,
                               style: theme.textTheme.bodySmall?.copyWith(
                                 color: Colors.grey.shade600,
                               ),
@@ -187,8 +190,8 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                     autofocus: false,
                     textCapitalization: TextCapitalization.words,
                     decoration: InputDecoration(
-                      labelText: 'Customer Name *',
-                      hintText: 'Enter full name',
+                      labelText: '${l10n.customerName} *',
+                      hintText: l10n.enterFullName,
                       prefixIcon: const Icon(Icons.person_rounded),
                       filled: true,
                       fillColor: Colors.grey.shade50,
@@ -220,10 +223,10 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                     ),
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
-                        return 'Please enter customer name';
+                        return l10n.nameRequired;
                       }
                       if (value.trim().length < 2) {
-                        return 'Name must be at least 2 characters';
+                        return l10n.nameMinLength;
                       }
                       return null;
                     },
@@ -234,8 +237,8 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                   TextFormField(
                     controller: _phoneController,
                     decoration: InputDecoration(
-                      labelText: 'Phone Number',
-                      hintText: 'Optional',
+                      labelText: l10n.phoneNumber,
+                      hintText: l10n.optional,
                       prefixIcon: const Icon(Icons.phone_rounded),
                       filled: true,
                       fillColor: Colors.grey.shade50,
@@ -268,8 +271,8 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                     maxLines: 2,
                     textCapitalization: TextCapitalization.sentences,
                     decoration: InputDecoration(
-                      labelText: 'Address',
-                      hintText: 'Optional',
+                      labelText: l10n.address,
+                      hintText: l10n.optional,
                       prefixIcon: const Icon(Icons.location_on_rounded),
                       alignLabelWithHint: true,
                       filled: true,
@@ -318,7 +321,7 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                             ),
                           ),
                           child: Text(
-                            'Cancel',
+                            l10n.cancel,
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
@@ -348,14 +351,14 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                                     color: Colors.white,
                                   ),
                                 )
-                              : const Row(
+                              : Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(Icons.check_rounded, size: 20),
-                                    SizedBox(width: 8),
+                                    const Icon(Icons.check_rounded, size: 20),
+                                    const SizedBox(width: 8),
                                     Text(
-                                      'Add Customer',
-                                      style: TextStyle(
+                                      l10n.add,
+                                      style: const TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600,
                                       ),

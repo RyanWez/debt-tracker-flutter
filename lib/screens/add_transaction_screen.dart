@@ -4,6 +4,7 @@ import 'package:uuid/uuid.dart';
 import 'package:intl/intl.dart';
 import '../data/models.dart';
 import '../providers/data_provider.dart';
+import '../l10n/app_localizations.dart';
 
 class AddTransactionScreen extends StatefulWidget {
   final String customerId;
@@ -53,10 +54,11 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final isDebt = widget.type == 'debt';
     return Scaffold(
       appBar: AppBar(
-        title: Text(isDebt ? 'Add Debt' : 'Add Payment'),
+        title: Text(isDebt ? l10n.addDebt : l10n.repay),
         backgroundColor: isDebt ? Colors.red.shade100 : Colors.green.shade100,
       ),
       body: Padding(
@@ -67,23 +69,23 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
             children: [
               TextFormField(
                 controller: _amountController,
-                decoration: const InputDecoration(
-                  labelText: 'Amount',
+                decoration: InputDecoration(
+                  labelText: l10n.amount,
                   prefixIcon: Icon(Icons.attach_money),
-                  suffixText: 'Ks',
+                  suffixText: l10n.currencySymbol,
                 ),
                 keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter an amount';
+                    return l10n.amountRequired;
                   }
                   final amount = double.tryParse(value);
                   if (amount == null) {
-                    return 'Please enter a valid number';
+                    return l10n.invalidAmount;
                   }
-                  if (amount <= 0) {
-                    return 'Amount must be greater than 0';
-                  }
+                    if (amount <= 0) {
+                      return l10n.amountMustBeGreaterThanZero;
+                    }
                   
                   // For payment, check if it exceeds total debt
                   if (widget.type == 'payment') {
@@ -96,11 +98,11 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                     );
                     
                     if (customer.totalDebt <= 0) {
-                      return 'No debt to repay';
+                      return l10n.noDebtToRepay;
                     }
                     
                     if (amount > customer.totalDebt) {
-                      return 'Payment cannot exceed debt: ${NumberFormat("#,##0", "en_US").format(customer.totalDebt)} Ks';
+                      return '${l10n.paymentCannotExceedDebt}${NumberFormat("#,##0", "en_US").format(customer.totalDebt)} ${l10n.currencySymbol}';
                     }
                   }
                   
@@ -123,8 +125,8 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                   }
                 },
                 child: InputDecorator(
-                  decoration: const InputDecoration(
-                    labelText: 'Date',
+                  decoration: InputDecoration(
+                    labelText: l10n.date,
                     prefixIcon: Icon(Icons.calendar_today),
                   ),
                   child: Text(DateFormat('yyyy-MM-dd').format(_selectedDate)),
@@ -133,8 +135,8 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
               const SizedBox(height: 16),
               TextFormField(
                 controller: _noteController,
-                decoration: const InputDecoration(
-                  labelText: 'Note (Optional)',
+                decoration: InputDecoration(
+                  labelText: l10n.note,
                   prefixIcon: Icon(Icons.note),
                 ),
               ),
@@ -147,7 +149,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                     backgroundColor: isDebt ? Colors.red : Colors.green,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                   ),
-                  child: Text('Save', style: const TextStyle(fontSize: 18)),
+                  child: Text(l10n.save, style: const TextStyle(fontSize: 18)),
                 ),
               ),
             ],

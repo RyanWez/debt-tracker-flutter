@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../data/models.dart';
 import '../providers/data_provider.dart';
+import '../l10n/app_localizations.dart';
 
 class EditCustomerDialog extends StatefulWidget {
   final Customer customer;
@@ -59,12 +60,13 @@ class _EditCustomerDialogState extends State<EditCustomerDialog> {
   }
 
   Future<void> _saveCustomer() async {
+    final l10n = AppLocalizations.of(context);
     if (_formKey.currentState!.validate()) {
       final name = _nameController.text.trim();
       
       // Check for duplicate name
       if (_isDuplicateName(name)) {
-        _showToast('Customer "$name" already exists!', isError: true);
+        _showToast(l10n.customerAlreadyExists, isError: true);
         return;
       }
 
@@ -88,7 +90,7 @@ class _EditCustomerDialogState extends State<EditCustomerDialog> {
 
       setState(() => _isLoading = false);
       
-      _showToast('✓ Customer "$name" updated successfully!');
+      _showToast(l10n.customerUpdatedSuccessfully);
       
       if (mounted) {
         Navigator.pop(context);
@@ -100,6 +102,7 @@ class _EditCustomerDialogState extends State<EditCustomerDialog> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final bottomInset = MediaQuery.of(context).viewInsets.bottom;
+    final l10n = AppLocalizations.of(context);
     
     return Align(
       alignment: Alignment.center,
@@ -173,17 +176,17 @@ class _EditCustomerDialogState extends State<EditCustomerDialog> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Edit Customer',
+                              l10n.editCustomer,
                               style: theme.textTheme.headlineSmall?.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            Text(
-                              'Update customer details',
-                              style: theme.textTheme.bodySmall?.copyWith(
-                                color: Colors.grey.shade600,
+                              Text(
+                                l10n.updateCustomerDetails,
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                  color: Colors.grey.shade600,
+                                ),
                               ),
-                            ),
                           ],
                         ),
                       ),
@@ -197,8 +200,8 @@ class _EditCustomerDialogState extends State<EditCustomerDialog> {
                     autofocus: false,
                     textCapitalization: TextCapitalization.words,
                     decoration: InputDecoration(
-                      labelText: 'Customer Name *',
-                      hintText: 'Enter full name',
+                      labelText: '${l10n.customerName} *',
+                      hintText: l10n.enterFullName,
                       prefixIcon: const Icon(Icons.person_rounded),
                       filled: true,
                       fillColor: Colors.grey.shade50,
@@ -230,10 +233,10 @@ class _EditCustomerDialogState extends State<EditCustomerDialog> {
                     ),
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
-                        return 'Please enter customer name';
+                        return l10n.nameRequired;
                       }
                       if (value.trim().length < 2) {
-                        return 'Name must be at least 2 characters';
+                        return l10n.nameMinLength;
                       }
                       return null;
                     },
@@ -244,8 +247,8 @@ class _EditCustomerDialogState extends State<EditCustomerDialog> {
                   TextFormField(
                     controller: _phoneController,
                     decoration: InputDecoration(
-                      labelText: 'Phone Number',
-                      hintText: 'Optional',
+                      labelText: l10n.phoneNumber,
+                      hintText: l10n.optional,
                       prefixIcon: const Icon(Icons.phone_rounded),
                       filled: true,
                       fillColor: Colors.grey.shade50,
@@ -278,8 +281,8 @@ class _EditCustomerDialogState extends State<EditCustomerDialog> {
                     maxLines: 2,
                     textCapitalization: TextCapitalization.sentences,
                     decoration: InputDecoration(
-                      labelText: 'Address',
-                      hintText: 'Optional',
+                      labelText: l10n.address,
+                      hintText: l10n.optional,
                       prefixIcon: const Icon(Icons.location_on_rounded),
                       alignLabelWithHint: true,
                       filled: true,
@@ -328,7 +331,7 @@ class _EditCustomerDialogState extends State<EditCustomerDialog> {
                             ),
                           ),
                           child: Text(
-                            'Cancel',
+                            l10n.cancel,
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
@@ -358,14 +361,14 @@ class _EditCustomerDialogState extends State<EditCustomerDialog> {
                                     color: Colors.white,
                                   ),
                                 )
-                              : const Row(
+                              : Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(Icons.check_rounded, size: 20),
-                                    SizedBox(width: 8),
+                                    const Icon(Icons.check_rounded, size: 20),
+                                    const SizedBox(width: 8),
                                     Text(
-                                      'Update',
-                                      style: TextStyle(
+                                      l10n.save,
+                                      style: const TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600,
                                       ),
