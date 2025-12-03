@@ -37,7 +37,10 @@ class DashboardScreen extends StatelessWidget {
                         value:
                             '${NumberFormat("#,##0", "en_US").format(totalDebt.abs())} ${l10n.currencySymbol}',
                         gradient: const LinearGradient(
-                          colors: [Color(0xFFEF4444), Color(0xFFF87171)],
+                          colors: [
+                            Color(0xFFEF5350), // Light Red
+                            Color(0xFFC62828), // Dark Red
+                          ],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),
@@ -50,7 +53,10 @@ class DashboardScreen extends StatelessWidget {
                         title: l10n.customers,
                         value: '$totalCustomers',
                         gradient: const LinearGradient(
-                          colors: [Color(0xFF3B82F6), Color(0xFF60A5FA)],
+                          colors: [
+                            Color(0xFF42A5F5), // Light Blue
+                            Color(0xFF1565C0), // Dark Blue
+                          ],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),
@@ -103,8 +109,17 @@ class DashboardScreen extends StatelessWidget {
                           );
                         },
                         child: Card(
+                          elevation: 2,
+                          shadowColor: Colors.black.withValues(alpha: 0.1),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
                           margin: const EdgeInsets.only(bottom: 12),
                           child: ListTile(
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 8,
+                            ),
                             leading: CircleAvatar(
                               backgroundColor: transaction.type == 'debt'
                                   ? Colors.red.shade50
@@ -121,14 +136,19 @@ class DashboardScreen extends StatelessWidget {
                             title: Text(
                               customer.name,
                               style: const TextStyle(
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16,
                               ),
                             ),
-                            subtitle: Text(
-                              DateFormat(
-                                'MMM d, h:mm a',
-                                'en',
-                              ).format(transaction.date),
+                            subtitle: Padding(
+                              padding: const EdgeInsets.only(top: 4),
+                              child: Text(
+                                DateFormat(
+                                  'MMM d, h:mm a',
+                                  'en',
+                                ).format(transaction.date),
+                                style: TextStyle(color: Colors.grey.shade600),
+                              ),
                             ),
                             trailing: Text(
                               '${transaction.type == 'debt' ? '-' : '+'}${NumberFormat("#,##0", "en_US").format(transaction.amount)}',
@@ -172,32 +192,45 @@ class _SummaryCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         gradient: gradient,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: gradient.colors.first.withValues(alpha: 0.3),
-            blurRadius: 8,
-            offset: const Offset(0, 4),
+            color: gradient.colors.last.withValues(alpha: 0.4),
+            blurRadius: 12,
+            offset: const Offset(0, 8),
+            spreadRadius: 0,
           ),
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(24.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(icon, color: Colors.white, size: 32),
-            const SizedBox(height: 12),
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.2),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(icon, color: Colors.white, size: 28),
+            ),
+            const SizedBox(height: 16),
             Text(
               title,
-              style: const TextStyle(color: Colors.white70, fontSize: 14),
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0.5,
+              ),
             ),
             const SizedBox(height: 4),
             Text(
               value,
               style: const TextStyle(
                 color: Colors.white,
-                fontSize: 24,
+                fontSize: 26,
                 fontWeight: FontWeight.bold,
               ),
             ),
