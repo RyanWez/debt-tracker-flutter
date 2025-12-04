@@ -43,9 +43,7 @@ dependencies:
   fluttertoast: ^9.0.0
   package_info_plus: ^9.0.0
   pattern_formatter: ^4.0.1
-  nhost_flutter_auth: ^4.2.1
-  nhost_graphql_adapter: ^4.0.10
-  graphql_flutter: ^5.2.1
+
 
 dev_dependencies:
   flutter_launcher_icons: ^0.13.1
